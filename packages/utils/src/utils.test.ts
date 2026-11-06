@@ -48,9 +48,9 @@ describe('dates', () => {
 
   it('formats ranges', () => {
     expect(formatDateRange('2026-04', '2026-09', { long: true })).toBe(
-      'April 2026 \u2013 September 2026',
+      'April 2026 - September 2026',
     )
-    expect(formatDateRange('2026-04', null)).toBe('Apr 2026 \u2013 Present')
+    expect(formatDateRange('2026-04', null)).toBe('Apr 2026 - Present')
   })
 
   it('counts months inclusively', () => {

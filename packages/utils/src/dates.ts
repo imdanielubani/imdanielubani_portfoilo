@@ -37,8 +37,8 @@ export function formatDateRange(
   options: { isCurrent?: boolean; long?: boolean } = {},
 ): string {
   const from = formatYearMonth(start, options.long)
-  if (options.isCurrent || !end) return from + ' \u2013 Present'
-  return from + ' \u2013 ' + formatYearMonth(end, options.long)
+  if (options.isCurrent || !end) return from + ' - Present'
+  return from + ' - ' + formatYearMonth(end, options.long)
 }
 
 /** Inclusive month count between two YYYY-MM values, e.g. Apr to Sep is 6. */
