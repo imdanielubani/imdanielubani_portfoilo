@@ -1,0 +1,4 @@
+{
+  "extends": "@du/config/tsconfig.library.json",
+  "include": ["src"]
+}
