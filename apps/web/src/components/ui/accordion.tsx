@@ -63,10 +63,12 @@ export function Accordion({ items, numbered = true, defaultOpen = -1 }: Accordio
                   role="region"
                   aria-labelledby={buttonId}
                   key="panel"
-                  initial={reduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
-                  animate={reduceMotion ? { opacity: 1 } : { height: 'auto', opacity: 1 }}
-                  exit={reduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3, ease: [0.23, 1, 0.32, 1] }}
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={
+                    reduceMotion ? { duration: 0 } : { duration: 0.3, ease: [0.23, 1, 0.32, 1] }
+                  }
                   className="overflow-hidden"
                 >
                   <div className="max-w-[62ch] pb-6 text-ink-muted">{item.content}</div>

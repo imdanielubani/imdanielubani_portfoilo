@@ -55,7 +55,7 @@ export function LanyardBadge({ image, name, role, priority }: LanyardBadgeProps)
       <div
         className={cn(
           'absolute top-0 left-1/2 -ml-[7.5rem] w-60 origin-top',
-          !isDragging && !reduceMotion && 'sway',
+          !isDragging && 'sway',
         )}
       >
         <motion.div style={{ rotate, transformOrigin: '50% 0%' }} className="origin-top">

@@ -54,7 +54,11 @@ export function BookingWidget({ booking, fallbackEmail }: BookingWidgetProps) {
   }, [step])
 
   const slide = reduceMotion
-    ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } }
+    ? {
+        initial: { opacity: 0, x: 0, filter: 'blur(0px)' },
+        animate: { opacity: 1, x: 0, filter: 'blur(0px)' },
+        exit: { opacity: 0, x: 0, filter: 'blur(0px)' },
+      }
     : {
         initial: { opacity: 0, x: 24 * direction, filter: 'blur(4px)' },
         animate: { opacity: 1, x: 0, filter: 'blur(0px)' },

@@ -74,7 +74,11 @@ export function TestimonialCarousel({ items }: { items: Testimonial[] }) {
   })
 
   const motionProps = reduceMotion
-    ? { initial: { opacity: 0 }, animate: { opacity: 1 }, exit: { opacity: 0 } }
+    ? {
+        initial: { opacity: 0, y: 0, filter: 'blur(0px)' },
+        animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
+        exit: { opacity: 0, y: 0, filter: 'blur(0px)' },
+      }
     : {
         initial: { opacity: 0, y: 12 * direction, filter: 'blur(6px)' },
         animate: { opacity: 1, y: 0, filter: 'blur(0px)' },
