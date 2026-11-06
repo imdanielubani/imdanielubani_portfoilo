@@ -61,7 +61,7 @@ export function ContactForm({ projectTypes, fallbackEmail }: ContactFormProps) {
   const describe = (name: keyof ContactFormValues) => (errors[name] ? errorId(name) : undefined)
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="relative">
+    <form onSubmit={(event) => handleSubmit(onSubmit)(event)} noValidate className="relative">
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <Label htmlFor={fieldId('name')}>Full name</Label>

@@ -3,7 +3,7 @@ import { ButtonLink } from '@/components/ui/button'
 export default function NotFound() {
   return (
     <section className="frame-pad flex min-h-[80vh] flex-col justify-center pt-32 pb-20">
-      <p className="section-label mb-4">// Error 404</p>
+      <p className="section-label mb-4">{'// Error 404'}</p>
       <h1 className="text-display max-w-3xl text-ink">
         This page took a <span className="text-ink-muted">different route.</span>
       </h1>
