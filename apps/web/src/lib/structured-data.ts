@@ -30,7 +30,7 @@ export function projectJsonLd(project: Project, settings: SiteSettings) {
     '@context': 'https://schema.org',
     '@type': 'CreativeWork',
     name: project.title,
-    headline: project.title + ' \u2014 ' + project.subtitle,
+    headline: project.title + ': ' + project.subtitle,
     description: project.summary,
     url: absoluteUrl('/projects/' + project.slug),
     image: absoluteUrl(project.heroImage.url),

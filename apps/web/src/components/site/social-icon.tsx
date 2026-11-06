@@ -1,6 +1,11 @@
-import { Globe, Mail } from 'lucide-react'
+import {
+  EnvelopeSimple,
+  GithubLogo,
+  Globe,
+  LinkedinLogo,
+  XLogo,
+} from '@phosphor-icons/react/dist/ssr'
 import type { SocialPlatform } from '@du/types'
-import { GithubIcon, LinkedinIcon } from '@/components/icons/brand'
 
 export function SocialIcon({
   platform,
@@ -9,8 +14,11 @@ export function SocialIcon({
   platform: SocialPlatform
   className?: string
 }) {
-  if (platform === 'github') return <GithubIcon className={className} />
-  if (platform === 'linkedin') return <LinkedinIcon className={className} />
-  if (platform === 'email') return <Mail className={className} aria-hidden />
-  return <Globe className={className} aria-hidden />
+  if (platform === 'github') return <GithubLogo aria-hidden weight="fill" className={className} />
+  if (platform === 'linkedin')
+    return <LinkedinLogo aria-hidden weight="fill" className={className} />
+  if (platform === 'x') return <XLogo aria-hidden weight="bold" className={className} />
+  if (platform === 'email')
+    return <EnvelopeSimple aria-hidden weight="fill" className={className} />
+  return <Globe aria-hidden className={className} />
 }
