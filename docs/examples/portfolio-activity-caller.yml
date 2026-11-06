@@ -1,0 +1,12 @@
+# Copy to .github/workflows/portfolio-activity.yml in any of your other repositories
+# so pushing there also refreshes the portfolio's GitHub activity graph right away.
+# Add the same two secrets to that repository (or once as organization secrets).
+name: Refresh portfolio activity
+
+on:
+  push:
+
+jobs:
+  refresh:
+    uses: imdanielubani/imdanielubani_portfoilo/.github/workflows/refresh-github-activity.yml@main
+    secrets: inherit
