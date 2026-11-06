@@ -1,0 +1,22 @@
+{
+  "name": "@du/content-seed",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@du/schemas": "workspace:*",
+    "@du/types": "workspace:*"
+  },
+  "devDependencies": {
+    "@du/config": "workspace:*",
+    "typescript": "5.9.3",
+    "vitest": "^3.2.7"
+  }
+}
