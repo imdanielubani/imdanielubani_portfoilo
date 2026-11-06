@@ -91,8 +91,30 @@ const homeSections: SectionInput[] = [
       eyebrow: '// good words',
       heading: 'Some good words from people I’ve worked with.',
       headingAccent: 'people I’ve worked with.',
-      // Real testimonials only: add them from the CMS. Until then an invitation is shown.
-      items: [],
+      // Placeholders to be replaced with real testimonials from the CMS.
+      items: [
+        {
+          quote:
+            'Placeholder testimonial. Replace this with a real quote from a client or colleague about working with Daniel.',
+          author: 'Client name',
+          role: 'Role',
+          company: 'Company',
+        },
+        {
+          quote:
+            'Placeholder testimonial. Add a short quote about a project Daniel delivered and the difference it made.',
+          author: 'Colleague name',
+          role: 'Role',
+          company: 'Company',
+        },
+        {
+          quote:
+            'Placeholder testimonial. Edit this entry in the CMS with a real recommendation, for example from LinkedIn.',
+          author: 'Manager name',
+          role: 'Role',
+          company: 'Company',
+        },
+      ],
       inviteTitle: 'Worked with me? I’d love to hear how it went.',
       inviteBody:
         'A short recommendation helps others understand what working with me is like. It will appear here once added.',

@@ -52,12 +52,15 @@ describe('home How it works', () => {
 })
 
 describe('home testimonials', () => {
-  it('replaces achievements and ships no invented quotes', () => {
+  it('replaces achievements and ships only clearly marked placeholder quotes', () => {
     const home = pages.find((p) => p.slug === 'home')
     expect(home?.sections.some((s) => s.type === 'statistics')).toBe(false)
     const section = home?.sections.find((s) => s.type === 'testimonials')
     expect(section?.type).toBe('testimonials')
     if (section?.type !== 'testimonials') return
-    expect(section.data.items).toEqual([])
+    expect(section.data.items).toHaveLength(3)
+    expect(
+      section.data.items.every((item) => item.quote.startsWith('Placeholder testimonial.')),
+    ).toBe(true)
   })
 })
