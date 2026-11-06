@@ -22,6 +22,11 @@
   --accent-ink: #ffffff;
   --success: #1f9d55;
   --success-soft: #e8f6ee;
+  --gh-0: #ebe7e1;
+  --gh-1: #9be9a8;
+  --gh-2: #40c463;
+  --gh-3: #30a14e;
+  --gh-4: #216e39;
   --danger: #d93d2b;
 
   --radius-sm: 10px;
@@ -59,6 +64,11 @@
   --accent-soft: #23150c;
   --success: #3fbf72;
   --success-soft: #0f2318;
+  --gh-0: #1c1c1c;
+  --gh-1: #0e4429;
+  --gh-2: #006d32;
+  --gh-3: #26a641;
+  --gh-4: #39d353;
   --shadow-card: 0 1px 2px rgb(0 0 0 / 0.5), 0 10px 30px -14px rgb(0 0 0 / 0.8);
   --shadow-float: 0 1px 2px rgb(0 0 0 / 0.55), 0 24px 50px -20px rgb(0 0 0 / 0.9);
   --shadow-pill: 0 1px 2px rgb(0 0 0 / 0.55), 0 6px 18px -8px rgb(0 0 0 / 0.8);
@@ -82,6 +92,16 @@
     --accent-soft: #23150c;
     --success: #3fbf72;
     --success-soft: #0f2318;
+    --gh-0: #1c1c1c;
+    --gh-1: #0e4429;
+    --gh-2: #006d32;
+    --gh-3: #26a641;
+    --gh-4: #39d353;
+  --gh-0: #1c1c1c;
+  --gh-1: #0e4429;
+  --gh-2: #006d32;
+  --gh-3: #26a641;
+  --gh-4: #39d353;
     --shadow-card: 0 1px 2px rgb(0 0 0 / 0.5), 0 10px 30px -14px rgb(0 0 0 / 0.8);
     --shadow-float: 0 1px 2px rgb(0 0 0 / 0.55), 0 24px 50px -20px rgb(0 0 0 / 0.9);
     --shadow-pill: 0 1px 2px rgb(0 0 0 / 0.55), 0 6px 18px -8px rgb(0 0 0 / 0.8);

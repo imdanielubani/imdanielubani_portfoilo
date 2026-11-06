@@ -22,6 +22,11 @@
   --color-success: var(--success);
   --color-success-soft: var(--success-soft);
   --color-danger: var(--danger);
+  --color-gh-0: var(--gh-0);
+  --color-gh-1: var(--gh-1);
+  --color-gh-2: var(--gh-2);
+  --color-gh-3: var(--gh-3);
+  --color-gh-4: var(--gh-4);
 
   --font-sans: var(--font-satoshi), ui-sans-serif, system-ui, sans-serif;
   --font-signature: var(--font-signature), cursive;
