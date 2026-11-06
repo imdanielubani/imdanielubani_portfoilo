@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, type ReactNode } from 'react'
 import type { SectionData } from '@du/schemas'
 import { cn } from '@/lib/cn'
 import { formatDuration, type IsoDate } from '@/lib/booking'
+import { DetailsStep } from './details-step'
 import { TimeStep } from './time-step'
 
 export type BookingConfig = SectionData<'howItWorks'>['booking']
@@ -23,7 +24,13 @@ interface BookingWidgetProps {
   fallbackEmail: string
 }
 
-export function BookingWidget({ booking }: BookingWidgetProps) {
+export function BookingWidget({ booking, fallbackEmail }: BookingWidgetProps) {
+  /** When the widget became interactive; the API uses it for spam timing checks. */
+  const startedAt = useRef(0)
+  useEffect(() => {
+    startedAt.current = Date.now()
+  }, [])
+
   const reduceMotion = useReducedMotion()
   const [step, setStep] = useState<Step>(1)
   const [direction, setDirection] = useState(1)
@@ -121,11 +128,23 @@ export function BookingWidget({ booking }: BookingWidgetProps) {
                   />
                 }
               />
-            ) : (
-              <div className="flex flex-1 flex-col">
-                <BackButton onClick={() => goTo(2)} />
-              </div>
-            )}
+            ) : service && date && time ? (
+              <DetailsStep
+                service={service}
+                date={date}
+                time={time}
+                timeZone={booking.timezone}
+                getStartedAt={() => startedAt.current || Date.now()}
+                fallbackEmail={fallbackEmail}
+                header={<BackButton onClick={() => goTo(2)} />}
+                onDone={() => {
+                  setServiceId(null)
+                  setDate(null)
+                  setTime(null)
+                  goTo(1)
+                }}
+              />
+            ) : null}
           </motion.div>
         </AnimatePresence>
       </div>

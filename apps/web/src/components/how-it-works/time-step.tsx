@@ -1,7 +1,7 @@
 'use client'
 
 import { CaretLeft, CaretRight } from '@phosphor-icons/react'
-import { useEffect, useMemo, useState, type ReactNode } from 'react'
+import { useState, useSyncExternalStore, type ReactNode } from 'react'
 import { cn } from '@/lib/cn'
 import {
   addDays,
@@ -27,6 +27,15 @@ interface TimeStepProps {
   footer: ReactNode
 }
 
+/** The calendar never changes date mid-visit in a way this widget must react to. */
+function subscribeNever(): () => void {
+  return () => {}
+}
+
+function fromIndex(index: number): { year: number; month: number } {
+  return { year: Math.floor(index / 12), month: index % 12 }
+}
+
 function monthOf(iso: IsoDate): { year: number; month: number } {
   return { year: Number(iso.slice(0, 4)), month: Number(iso.slice(5, 7)) - 1 }
 }
@@ -40,17 +49,18 @@ export function TimeStep({
   header,
   footer,
 }: TimeStepProps) {
-  // "Today" depends on the visitor's clock, so it is only known after mount.
-  const [today, setToday] = useState<IsoDate | null>(null)
-  const [view, setView] = useState<{ year: number; month: number } | null>(null)
+  // "Today" depends on the visitor's clock, so it is only known on the client.
+  const today = useSyncExternalStore(
+    subscribeNever,
+    () => todayInTimeZone(booking.timezone),
+    () => null,
+  )
+  /** Months navigated away from the month of the selected (or first bookable) day. */
+  const [shift, setShift] = useState(0)
 
-  useEffect(() => {
-    const now = todayInTimeZone(booking.timezone)
-    setToday(now)
-    setView(monthOf(date ?? addDays(now, booking.minNoticeDays)))
-  }, [booking.timezone, booking.minNoticeDays, date])
-
-  const weeks = useMemo(() => (view ? monthGrid(view.year, view.month) : []), [view])
+  const base = today ? monthOf(date ?? addDays(today, booking.minNoticeDays)) : null
+  const view = base ? fromIndex(base.year * 12 + base.month + shift) : null
+  const weeks = view ? monthGrid(view.year, view.month) : []
 
   if (!today || !view) {
     return (
@@ -65,10 +75,7 @@ export function TimeStep({
   const last = monthOf(addDays(today, booking.daysAhead))
   const canGoBack = view.year * 12 + view.month > first.year * 12 + first.month
   const canGoForward = view.year * 12 + view.month < last.year * 12 + last.month
-  const shiftMonth = (delta: number) => {
-    const index = view.year * 12 + view.month + delta
-    setView({ year: Math.floor(index / 12), month: index % 12 })
-  }
+  const shiftMonth = (delta: number) => setShift((current) => current + delta)
 
   return (
     <div className="flex flex-1 flex-col">
@@ -117,7 +124,10 @@ export function TimeStep({
                         disabled={!bookable}
                         aria-pressed={selected}
                         aria-label={formatLongDate(day) + (bookable ? '' : ', unavailable')}
-                        onClick={() => onDateChange(day)}
+                        onClick={() => {
+                          setShift(0)
+                          onDateChange(day)
+                        }}
                         className={cn(
                           'relative mx-auto flex size-9 items-center justify-center rounded-full text-sm tabular-nums transition-[background-color,color,transform] duration-150 active:scale-95',
                           selected && 'bg-accent text-accent-ink',
