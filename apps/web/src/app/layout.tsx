@@ -6,9 +6,9 @@ import { fontVariables } from '@/lib/fonts'
 import { personJsonLd, websiteJsonLd } from '@/lib/structured-data'
 import { JsonLd } from '@/components/seo/json-ld'
 import { ThemeScript } from '@/components/theme/theme-script'
-import { MotionRoot } from '@/components/motion/motion-root'
-import { Cursor } from '@/components/motion/cursor'
-import { SiteHeader } from '@/components/site/site-header'
+import { SmoothScroll } from '@/components/motion/motion-root'
+import { Dock } from '@/components/site/dock'
+import { ProfilePill } from '@/components/site/profile-pill'
 import { SiteFooter } from '@/components/site/site-footer'
 import './globals.css'
 
@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
   const title = settings.defaultSeo.title ?? settings.ownerName
   return {
     metadataBase: new URL(getSiteUrl()),
-    title: { default: title, template: '%s \u2014 ' + settings.ownerName },
+    title: { default: title, template: '%s | ' + settings.ownerName },
     description: settings.defaultSeo.description,
     applicationName: settings.siteName,
     authors: [{ name: settings.ownerName }],
@@ -30,8 +30,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#faf9f7' },
-    { media: '(prefers-color-scheme: dark)', color: '#0d1820' },
+    { media: '(prefers-color-scheme: light)', color: '#f6f4f0' },
+    { media: '(prefers-color-scheme: dark)', color: '#0b161d' },
   ],
 }
 
@@ -50,13 +50,18 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           Skip to content
         </a>
         <JsonLd data={[personJsonLd(settings), websiteJsonLd(settings)]} />
-        <SiteHeader items={navigation.header} isAvailable={settings.isAvailable} />
-        <main id="main" className="min-h-[70vh]">
-          {children}
-        </main>
-        <SiteFooter settings={settings} navigation={navigation} />
-        <MotionRoot />
-        <Cursor />
+        <Dock items={navigation.header} />
+        <ProfilePill
+          name={settings.ownerName}
+          role={settings.jobTitle}
+          avatarUrl={settings.defaultSeo.ogImage?.url ?? null}
+          isAvailable={settings.isAvailable}
+        />
+        <div className="frame">
+          <main id="main">{children}</main>
+          <SiteFooter settings={settings} navigation={navigation} />
+        </div>
+        <SmoothScroll />
       </body>
     </html>
   )
