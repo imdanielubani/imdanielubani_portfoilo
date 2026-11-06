@@ -157,18 +157,60 @@ const homeSections: SectionInput[] = [
     },
   },
   {
-    id: 'home-cta',
-    type: 'cta',
+    id: 'home-how-it-works',
+    type: 'howItWorks',
     data: {
-      eyebrow: '// Let’s talk',
-      heading: 'Have a product that needs to work in the real world?',
-      headingAccent: 'real world?',
-      body: 'I’m open to onsite, remote and hybrid roles, as well as contract work.',
-      variant: 'large',
-      ctas: [
-        { label: 'Let’s Work Together', href: '/contact', variant: 'primary' },
-        { label: 'Download My Resume', href: RESUME_URL, variant: 'secondary', download: true },
+      eyebrow: '// How it works',
+      heading: 'No agencies. Just me, fully in on your product.',
+      headingAccent: 'fully in on your product.',
+      stats: [
+        { value: '3+', label: 'Years shipping' },
+        { value: '5', label: 'Case studies' },
+        { value: '4', label: 'Industries' },
       ],
+      engagement: {
+        title: 'Work with me',
+        description:
+          'One engineer across web, mobile and backend. I design the system, build it and ship it, start to finish.',
+        highlights: [
+          'Full-time, contract or freelance',
+          'Onsite, remote or hybrid',
+          'Web, mobile and backend in one person',
+          'From architecture to deployment',
+        ],
+        ctaLabel: 'Let’s connect',
+        ctaHref: '/contact',
+      },
+      booking: {
+        enabled: true,
+        title: 'Book a call',
+        note: 'Pick a time that suits you. I confirm every request by email.',
+        services: [
+          {
+            id: 'intro-call',
+            title: 'Intro call',
+            durationMinutes: 30,
+            description: 'Talk through your product, team or role.',
+          },
+          {
+            id: 'project-scoping',
+            title: 'Project scoping',
+            durationMinutes: 45,
+            description: 'Walk through requirements and agree on an approach.',
+          },
+          {
+            id: 'technical-consultation',
+            title: 'Technical consultation',
+            durationMinutes: 60,
+            description: 'Architecture, code or delivery review.',
+          },
+        ],
+        slotTimes: ['10:00', '11:30', '14:00', '15:30', '17:00'],
+        workingDays: [1, 2, 3, 4, 5],
+        timezone: 'Africa/Lagos',
+        minNoticeDays: 1,
+        daysAhead: 45,
+      },
     },
   },
 ]

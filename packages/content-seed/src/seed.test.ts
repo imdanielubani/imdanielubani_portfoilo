@@ -38,3 +38,15 @@ describe('content seed', () => {
     expect(experience.map((e) => e.company)).toEqual(['Cviqli Technologies', 'Zicstack Innovation'])
   })
 })
+
+describe('home How it works', () => {
+  it('offers bookable services and only real stats', () => {
+    const home = pages.find((p) => p.slug === 'home')
+    const section = home?.sections.find((s) => s.type === 'howItWorks')
+    expect(section).toBeDefined()
+    if (section?.type !== 'howItWorks') return
+    expect(section.data.booking.services.length).toBeGreaterThan(0)
+    expect(section.data.booking.services.every((s) => !s.priceLabel)).toBe(true)
+    expect(section.data.stats.map((s) => s.value)).toEqual(['3+', '5', '4'])
+  })
+})
