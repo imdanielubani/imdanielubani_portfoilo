@@ -1,25 +1,22 @@
-import { Inter_Tight, Instrument_Serif, JetBrains_Mono } from 'next/font/google'
+import localFont from 'next/font/local'
+import { Mrs_Saint_Delafield } from 'next/font/google'
 
-export const fontSans = Inter_Tight({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-inter-tight',
+/** Satoshi (Indian Type Foundry, Fontshare free licence), self-hosted variable font. */
+export const fontSans = localFont({
+  src: [
+    { path: '../fonts/Satoshi-Variable.woff2', weight: '300 900', style: 'normal' },
+    { path: '../fonts/Satoshi-VariableItalic.woff2', weight: '300 900', style: 'italic' },
+  ],
+  variable: '--font-satoshi',
   display: 'swap',
 })
 
-export const fontSerif = Instrument_Serif({
+/** Script face used only for the footer signature. */
+export const fontSignature = Mrs_Saint_Delafield({
   subsets: ['latin'],
   weight: '400',
-  style: ['italic', 'normal'],
-  variable: '--font-instrument-serif',
+  variable: '--font-signature',
   display: 'swap',
 })
 
-export const fontMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-jetbrains-mono',
-  display: 'swap',
-})
-
-export const fontVariables = [fontSans.variable, fontSerif.variable, fontMono.variable].join(' ')
+export const fontVariables = [fontSans.variable, fontSignature.variable].join(' ')

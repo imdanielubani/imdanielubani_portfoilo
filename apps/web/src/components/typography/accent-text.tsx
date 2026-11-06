@@ -2,13 +2,13 @@ import { Fragment } from 'react'
 
 interface AccentTextProps {
   text: string
-  /** Substring of text rendered in the editorial italic serif. */
+  /** Substring of text rendered in the muted tone (same family, no font switch). */
   accent?: string
   accentClassName?: string
 }
 
-/** Renders text with an optional serif-italic accent phrase. Plain text only; never HTML. */
-export function AccentText({ text, accent, accentClassName = 'accent-serif' }: AccentTextProps) {
+/** Renders text with an optional de-emphasised phrase. Plain text only; never HTML. */
+export function AccentText({ text, accent, accentClassName = 'text-ink-muted' }: AccentTextProps) {
   if (!accent) return <>{text}</>
   const index = text.lastIndexOf(accent)
   if (index === -1) return <>{text}</>

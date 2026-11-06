@@ -21,7 +21,7 @@ export function CmsImage({ media, sizes, className, priority, fill = true }: Cms
         alt={media.alt}
         fill
         sizes={sizes}
-        priority={priority}
+        preload={priority}
         className={cn('object-cover', className)}
         style={style}
       />
@@ -34,7 +34,7 @@ export function CmsImage({ media, sizes, className, priority, fill = true }: Cms
       width={media.width ?? 1600}
       height={media.height ?? 1000}
       sizes={sizes}
-      priority={priority}
+      preload={priority}
       className={cn('h-auto w-full', className)}
       style={style}
     />

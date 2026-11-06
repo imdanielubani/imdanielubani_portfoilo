@@ -4,25 +4,25 @@ import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'reac
 import { cn } from '@/lib/cn'
 
 export const buttonVariants = cva(
-  'group/btn relative inline-flex select-none items-center justify-center gap-2 whitespace-nowrap rounded-full font-medium transition-[background-color,color,border-color,box-shadow,transform] duration-200 ease-[var(--ease-out)] disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]',
+  'group/btn relative inline-flex select-none items-center justify-center gap-2.5 whitespace-nowrap rounded-full font-medium transition-[transform,background-color,border-color,box-shadow,color] duration-200 ease-[var(--ease-out)] active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        primary: 'bg-ink text-canvas hover:bg-accent hover:text-accent-ink',
-        accent: 'bg-accent text-accent-ink hover:bg-ink hover:text-canvas',
-        secondary: 'border border-line bg-surface-2/60 text-ink backdrop-blur hover:border-ink',
-        ghost: 'text-ink underline decoration-line underline-offset-[6px] hover:decoration-accent',
-        onDark: 'bg-on-teal text-teal-900 hover:bg-accent hover:text-accent-ink',
-        onDarkOutline: 'border border-on-teal/30 text-on-teal hover:border-on-teal',
+        /** White pill with the signature orange dot. */
+        primary:
+          'border border-line bg-surface-2 text-ink shadow-pill hover:border-line-strong hover:shadow-card',
+        secondary: 'border border-line-strong bg-transparent text-ink hover:bg-surface-2',
+        solid: 'bg-ink text-canvas hover:bg-accent hover:text-accent-ink',
+        ghost:
+          'h-auto px-0 text-ink underline decoration-line-strong underline-offset-[6px] hover:decoration-accent',
       },
       size: {
         sm: 'h-9 px-4 text-sm',
         md: 'h-11 px-5 text-[0.95rem]',
-        lg: 'h-14 px-7 text-base',
+        lg: 'h-12 px-6 text-base',
         icon: 'size-11',
       },
     },
-    compoundVariants: [{ variant: 'ghost', class: 'h-auto px-0' }],
     defaultVariants: { variant: 'primary', size: 'md' },
   },
 )
@@ -55,8 +55,8 @@ export function ButtonLink({
   ...props
 }: ButtonLinkProps) {
   const classes = cn(buttonVariants({ variant, size }), className)
-  const isInternal = href.startsWith('/') && !external && !download
-  if (isInternal) return <Link href={href} className={classes} {...props} />
+  if (href.startsWith('/') && !external && !download)
+    return <Link href={href} className={classes} {...props} />
   return (
     <a
       href={href}
@@ -64,6 +64,19 @@ export function ButtonLink({
       download={download}
       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
       {...props}
+    />
+  )
+}
+
+/** The small orange dot used on primary actions, as in the reference design. */
+export function AccentDot({ className }: { className?: string }) {
+  return (
+    <span
+      aria-hidden
+      className={cn(
+        'size-2.5 rounded-full bg-accent transition-transform duration-300 group-hover/btn:scale-125',
+        className,
+      )}
     />
   )
 }

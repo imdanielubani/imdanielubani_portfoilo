@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div className="container-du pt-40 pb-24" role="status" aria-live="polite">
+    <div className="frame-pad pt-28 pb-24" role="status" aria-live="polite">
       <span className="sr-only">Loading</span>
       <div className="h-4 w-32 animate-pulse rounded-full bg-surface" />
       <div className="mt-8 h-16 w-full max-w-3xl animate-pulse rounded-2xl bg-surface" />

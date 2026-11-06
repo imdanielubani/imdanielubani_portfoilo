@@ -2,51 +2,57 @@ import type { ReactNode } from 'react'
 import type { SectionSettings } from '@du/schemas'
 import { cn } from '@/lib/cn'
 
-const backgrounds: Record<SectionSettings['background'], string> = {
-  canvas: 'bg-canvas text-ink',
-  surface: 'bg-surface text-ink',
-  teal: 'on-dark bg-teal-900 text-on-teal',
-  ink: 'on-dark bg-[#0b1419] text-on-teal',
+/*
+ * Every section lives inside the framed column and is separated by a hairline,
+ * like the reference. The page keeps one theme: "teal" and "ink" backgrounds
+ * from the CMS render as a tinted surface rather than a dark block.
+ */
+
+function backgroundClass(background: SectionSettings['background'] | undefined): string {
+  if (background === 'surface' || background === 'teal' || background === 'ink')
+    return 'bg-surface/50'
+  return ''
 }
 
-const spacings: Record<SectionSettings['spacing'], string> = {
-  none: 'py-0',
-  sm: 'py-12 md:py-16',
-  md: 'py-16 md:py-24',
-  lg: 'py-[var(--section-y)]',
+function spacingClass(spacing: SectionSettings['spacing'] | undefined): string {
+  if (spacing === 'none') return 'py-0'
+  if (spacing === 'sm') return 'py-10 md:py-14'
+  if (spacing === 'md') return 'py-14 md:py-20'
+  return 'py-[var(--section-y)]'
 }
 
 interface SectionShellProps {
   settings?: Partial<SectionSettings>
   id?: string
   className?: string
-  containerClassName?: string
   children: ReactNode
-  /** Skip the inner container for full-bleed content. */
-  bleed?: boolean
-}
-
-export function isDarkBackground(settings?: Partial<SectionSettings>): boolean {
-  return settings?.background === 'teal' || settings?.background === 'ink'
+  /** Hide the top hairline (first section on a page). */
+  isFirst?: boolean
+  labelledBy?: string
 }
 
 export function SectionShell({
   settings,
   id,
   className,
-  containerClassName,
   children,
-  bleed,
+  isFirst,
+  labelledBy,
 }: SectionShellProps) {
-  const background = settings?.background ?? 'canvas'
-  const spacing = settings?.spacing ?? 'lg'
   return (
     <section
       id={settings?.anchor || id}
-      className={cn('relative', backgrounds[background], spacings[spacing], className)}
+      aria-labelledby={labelledBy}
+      className={cn(
+        'frame-pad relative',
+        !isFirst && 'border-t border-line-strong',
+        backgroundClass(settings?.background),
+        spacingClass(settings?.spacing),
+        className,
+      )}
       data-section
     >
-      {bleed ? children : <div className={cn('container-du', containerClassName)}>{children}</div>}
+      {children}
     </section>
   )
 }
