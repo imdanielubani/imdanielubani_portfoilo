@@ -1,10 +1,12 @@
-import { MapPin } from 'lucide-react'
+import { MapPin } from '@phosphor-icons/react/dist/ssr'
 import type { SectionOf } from '@du/schemas'
 import type { SiteSettings } from '@du/types'
 import { cn } from '@/lib/cn'
-import { CmsImage } from '@/components/media/cms-image'
 import { SplitWords } from '@/components/motion/split-words'
+import { SectionShell } from '@/components/layout/section-shell'
 import { CtaButton } from '@/components/ui/cta-button'
+import { AvailabilityBadge } from '@/components/ui/availability-badge'
+import { LanyardBadge } from './lanyard-badge'
 
 interface HeroSectionProps {
   section: SectionOf<'hero'>
@@ -17,89 +19,79 @@ export function HeroSection({ section, site, isFirst = false }: HeroSectionProps
   const { data } = section
   const hasImage = Boolean(data.image)
   return (
-    <section
-      id={section.settings.anchor}
-      className="relative isolate overflow-hidden pt-32 pb-20 md:pt-40 md:pb-28"
-      data-section
+    <SectionShell
+      settings={section.settings}
+      isFirst={isFirst}
+      className={cn('overflow-hidden', isFirst ? 'pt-24 pb-20 md:pt-28 md:pb-24' : undefined)}
     >
-      <div aria-hidden className="hairline-grid absolute inset-0 -z-10 opacity-70" />
       <div
-        aria-hidden
-        className="hero-orb absolute -top-40 right-[-10%] -z-10 size-[42rem] rounded-full bg-[radial-gradient(circle_at_center,color-mix(in_oklab,var(--accent)_22%,transparent),transparent_65%)] blur-2xl"
-      />
+        className={cn(
+          'grid items-start gap-10',
+          hasImage && 'md:grid-cols-[minmax(0,1.35fr)_minmax(0,1fr)]',
+        )}
+      >
+        <div className="max-w-xl">
+          {data.showAvailability && site.isAvailable ? (
+            <div className="mb-7" data-reveal>
+              <AvailabilityBadge />
+            </div>
+          ) : null}
 
-      <div className={cn('container-du grid items-end gap-14', hasImage && 'lg:grid-cols-12')}>
-        <div className={cn(hasImage ? 'lg:col-span-7' : 'max-w-5xl')}>
-          <div className="mb-8 flex flex-wrap items-center gap-3" data-reveal>
-            {data.showAvailability && site.isAvailable ? (
-              <span className="inline-flex items-center gap-2 rounded-full border border-line bg-surface-2/70 px-3 py-1.5 font-mono text-[0.7rem] tracking-wider text-ink-muted uppercase backdrop-blur">
-                <span className="relative flex size-2">
-                  <span className="absolute inline-flex size-full animate-ping rounded-full bg-success opacity-60" />
-                  <span className="relative inline-flex size-2 rounded-full bg-success" />
-                </span>
-                Available for work
+          {data.eyebrow ? (
+            <p className="mb-4 text-h3 text-ink-soft" data-reveal>
+              {data.eyebrow}{' '}
+              <span aria-hidden className="wave">
+                &#x1F44B;
               </span>
-            ) : null}
-            {data.eyebrow ? <span className="eyebrow">{data.eyebrow}</span> : null}
-          </div>
+            </p>
+          ) : null}
 
-          <h1 className="text-display font-medium" data-reveal="words">
-            <SplitWords text={data.headline} accent={data.headlineAccent} />
+          <h1 className="text-display text-ink" data-reveal="words">
+            <SplitWords
+              text={data.headline}
+              accent={data.headlineAccent}
+              accentClassName="text-ink-muted"
+            />
           </h1>
 
           {data.body ? (
-            <p className="mt-8 max-w-2xl text-lead text-ink-muted" data-reveal>
+            <p className="mt-7 max-w-[56ch] text-ink-muted" data-reveal>
               {data.body}
             </p>
           ) : null}
           {data.secondaryBody ? (
-            <p className="mt-4 max-w-2xl text-ink-muted" data-reveal>
+            <p className="mt-3 max-w-[56ch] text-ink-muted" data-reveal>
               {data.secondaryBody}
             </p>
           ) : null}
 
           {data.ctas.length > 0 ? (
-            <div className="mt-10 flex flex-wrap items-center gap-3" data-reveal>
+            <div className="mt-9 flex flex-wrap items-center gap-3" data-reveal>
               {data.ctas.map((cta) => (
-                <CtaButton key={cta.label + cta.href} cta={cta} size="lg" />
+                <CtaButton key={cta.label + cta.href} cta={cta} />
               ))}
             </div>
           ) : null}
 
           {data.location ? (
-            <p className="mt-10 inline-flex items-start gap-2 text-sm text-ink-muted" data-reveal>
-              <MapPin aria-hidden className="mt-0.5 size-4 shrink-0 text-accent" />
+            <p className="mt-8 inline-flex items-start gap-2 text-sm text-ink-muted" data-reveal>
+              <MapPin aria-hidden weight="fill" className="mt-0.5 size-4 shrink-0 text-accent" />
               {data.location}
             </p>
           ) : null}
         </div>
 
         {data.image ? (
-          <div className="relative lg:col-span-5" data-reveal="image">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[var(--radius-xl)] bg-surface shadow-float">
-              <div className="absolute inset-[-8%]" data-parallax="0.12">
-                <CmsImage
-                  media={data.image}
-                  sizes="(min-width: 1024px) 40vw, 100vw"
-                  priority={isFirst}
-                />
-              </div>
-              <div className="absolute inset-x-0 bottom-0 h-1/3 bg-gradient-to-t from-black/55 to-transparent" />
-              <div className="absolute right-4 bottom-4 left-4 flex items-end justify-between gap-4 text-white">
-                <div>
-                  <p className="font-mono text-[0.7rem] tracking-wider text-white/70 uppercase">
-                    {site.ownerName}
-                  </p>
-                  <p className="text-sm font-medium">{site.jobTitle}</p>
-                </div>
-                <span className="rounded-full bg-white/15 px-3 py-1 font-mono text-[0.7rem] tracking-wider uppercase backdrop-blur">
-                  {site.location}
-                </span>
-              </div>
-            </div>
+          <div className="relative -mt-28 hidden self-stretch md:block" data-reveal>
+            <LanyardBadge
+              image={data.image}
+              name={site.ownerName}
+              role={site.jobTitle}
+              priority={isFirst}
+            />
           </div>
         ) : null}
       </div>
-    </section>
+    </SectionShell>
   )
 }

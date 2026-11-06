@@ -3,9 +3,10 @@ import { Fragment } from 'react'
 interface SplitWordsProps {
   text: string
   accent?: string
+  accentClassName?: string
 }
 
-function words(text: string, accent: boolean, keyPrefix: string) {
+function words(text: string, accentClass: string | null, keyPrefix: string) {
   return text
     .split(/(\s+)/)
     .filter((part) => part.length > 0)
@@ -19,7 +20,9 @@ function words(text: string, accent: boolean, keyPrefix: string) {
         >
           <span
             data-word
-            className={'inline-block will-change-transform' + (accent ? ' accent-serif' : '')}
+            className={
+              'inline-block will-change-transform' + (accentClass ? ' ' + accentClass : '')
+            }
           >
             {part}
           </span>
@@ -32,14 +35,14 @@ function words(text: string, accent: boolean, keyPrefix: string) {
  * Splits a headline into masked words for the staggered reveal. Rendered on the
  * server, so the full text is in the HTML for SEO and screen readers.
  */
-export function SplitWords({ text, accent }: SplitWordsProps) {
+export function SplitWords({ text, accent, accentClassName = 'text-ink-muted' }: SplitWordsProps) {
   const index = accent ? text.lastIndexOf(accent) : -1
-  if (!accent || index === -1) return <>{words(text, false, 'w')}</>
+  if (!accent || index === -1) return <>{words(text, null, 'w')}</>
   return (
     <>
-      {words(text.slice(0, index), false, 'a')}
-      {words(accent, true, 'b')}
-      {words(text.slice(index + accent.length), false, 'c')}
+      {words(text.slice(0, index), null, 'a')}
+      {words(accent, accentClassName, 'b')}
+      {words(text.slice(index + accent.length), null, 'c')}
     </>
   )
 }
