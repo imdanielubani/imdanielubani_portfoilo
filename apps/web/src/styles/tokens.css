@@ -1,0 +1,84 @@
+/*
+ * Design tokens. Light is the default; dark applies via data-theme="dark" on <html>,
+ * or via the OS preference when no explicit theme is set.
+ */
+:root {
+  --canvas: #faf9f7;
+  --surface: #f0ede8;
+  --surface-2: #ffffff;
+  --line: #d6d0c8;
+  --line-soft: #e6e1da;
+  --ink: #111111;
+  --ink-muted: #5c6670;
+  --ink-subtle: #8a939b;
+  --teal-900: #1b3a4b;
+  --teal-700: #2b4e60;
+  --teal-600: #4e6e7e;
+  --accent: #ff5c00;
+  --accent-ink: #ffffff;
+  --success: #22a35a;
+  --danger: #d93d2b;
+
+  --on-teal: #f3f1ec;
+  --on-teal-muted: #a9bfca;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.05), 0 8px 24px -12px rgb(0 0 0 / 0.15);
+  --shadow-float: 0 1px 2px rgb(0 0 0 / 0.06), 0 18px 48px -18px rgb(0 0 0 / 0.28);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 200ms;
+  --dur-enter: 600ms;
+  --dur-mask: 900ms;
+
+  --container: 1280px;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+  --section-y: clamp(5rem, 10vw, 9rem);
+
+  color-scheme: light;
+}
+
+:root[data-theme='dark'] {
+  --canvas: #0d1820;
+  --surface: #13222c;
+  --surface-2: #182b37;
+  --line: #2a3e4a;
+  --line-soft: #1f323d;
+  --ink: #f3f1ec;
+  --ink-muted: #9aaab4;
+  --ink-subtle: #6f828d;
+  --teal-900: #10262f;
+  --teal-700: #1b3a4b;
+  --teal-600: #7e9eae;
+  --accent: #ff6a1a;
+  --success: #40c463;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+  --shadow-float: 0 1px 2px rgb(0 0 0 / 0.4), 0 18px 48px -18px rgb(0 0 0 / 0.7);
+  color-scheme: dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --canvas: #0d1820;
+    --surface: #13222c;
+    --surface-2: #182b37;
+    --line: #2a3e4a;
+    --line-soft: #1f323d;
+    --ink: #f3f1ec;
+    --ink-muted: #9aaab4;
+    --ink-subtle: #6f828d;
+    --teal-900: #10262f;
+    --teal-700: #1b3a4b;
+    --teal-600: #7e9eae;
+    --accent: #ff6a1a;
+    --success: #40c463;
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -12px rgb(0 0 0 / 0.6);
+    --shadow-float: 0 1px 2px rgb(0 0 0 / 0.4), 0 18px 48px -18px rgb(0 0 0 / 0.7);
+    color-scheme: dark;
+  }
+}
