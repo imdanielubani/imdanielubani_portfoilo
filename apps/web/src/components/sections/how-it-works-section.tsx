@@ -29,7 +29,8 @@ export function HowItWorksSection({ section, site }: HowItWorksSectionProps) {
         />
       </div>
       {data.booking.enabled ? (
-        <div className="mt-16 md:mt-20">
+        <div className="-mx-[var(--frame-pad)] mt-[var(--section-y)] border-t border-line-strong px-[var(--frame-pad)] pt-[var(--section-y)]">
+          {/* Full-width hairline separating the hire-me row from the booking panel. */}
           <BookingPanel booking={data.booking} site={site} />
         </div>
       ) : null}
