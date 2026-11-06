@@ -27,7 +27,10 @@ function secretMatches(provided: string | null): boolean {
   return a.length === b.length && timingSafeEqual(a, b)
 }
 
-/** Called by the API after content is published so pages refresh immediately. */
+/**
+ * Called by the API after content is published, and by the GitHub Action after a
+ * push, so pages refresh immediately. Tags expire at once (not stale-while-revalidate).
+ */
 export async function POST(request: NextRequest) {
   if (!secretMatches(request.headers.get('x-revalidate-secret'))) {
     return NextResponse.json(
@@ -54,7 +57,7 @@ export async function POST(request: NextRequest) {
     )
   }
 
-  for (const tag of parsed.data.tags) revalidateTag(tag, 'max')
+  for (const tag of parsed.data.tags) revalidateTag(tag, { expire: 0 })
   for (const path of parsed.data.paths) revalidatePath(path)
 
   return NextResponse.json({ success: true, data: { revalidated: parsed.data }, error: null })

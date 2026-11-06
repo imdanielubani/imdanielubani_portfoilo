@@ -1,8 +1,12 @@
 import 'server-only'
 import { fromGraphqlResponse, fromPublicResponse, type ContributionCalendar } from './contributions'
 
-const REVALIDATE_SECONDS = 60 * 60 * 6
+/** Fallback refresh window; pushes trigger an immediate refresh via /api/revalidate. */
+const REVALIDATE_SECONDS = 60 * 60
 const TIMEOUT_MS = 8000
+
+/** Cache tag the refresh workflow sends to POST /api/revalidate. */
+export const CONTRIBUTIONS_TAG = 'github-contributions'
 
 const QUERY = `query($login: String!) {
   user(login: $login) {
@@ -20,7 +24,7 @@ async function fromGraphql(username: string, token: string): Promise<Contributio
     method: 'POST',
     headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' },
     body: JSON.stringify({ query: QUERY, variables: { login: username } }),
-    next: { revalidate: REVALIDATE_SECONDS, tags: ['github-contributions'] },
+    next: { revalidate: REVALIDATE_SECONDS, tags: [CONTRIBUTIONS_TAG] },
     signal: AbortSignal.timeout(TIMEOUT_MS),
   })
   if (!response.ok) return null
@@ -32,7 +36,7 @@ async function fromPublicMirror(username: string): Promise<ContributionCalendar 
     'https://github-contributions-api.jogruber.de/v4/' + encodeURIComponent(username) + '?y=last'
   const response = await fetch(url, {
     headers: { Accept: 'application/json' },
-    next: { revalidate: REVALIDATE_SECONDS, tags: ['github-contributions'] },
+    next: { revalidate: REVALIDATE_SECONDS, tags: [CONTRIBUTIONS_TAG] },
     signal: AbortSignal.timeout(TIMEOUT_MS),
   })
   if (!response.ok) return null
