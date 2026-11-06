@@ -56,10 +56,8 @@ export function ProjectCard({
 
       <div className="flex flex-col p-6 md:p-7">
         <Heading className="text-h3 text-ink">
-          <Link href={href} className="after:absolute after:inset-0 after:content-['']">
-            {project.title}
-            <span className="text-ink-muted">: {project.subtitle}</span>
-          </Link>
+          {project.title}
+          <span className="text-ink-muted">: {project.subtitle}</span>
         </Heading>
         <ul className="mt-3 flex flex-wrap gap-2" aria-label="Project details">
           <li className="chip">{project.category.name}</li>
@@ -81,14 +79,18 @@ export function ProjectCard({
               <span className="block truncate text-sm text-ink-muted">{project.role}</span>
             </span>
           </div>
-          <span
-            aria-hidden
-            className="relative z-10 flex size-11 shrink-0 items-center justify-center rounded-full border border-line bg-surface-2 shadow-pill transition-transform duration-300 group-hover:rotate-45"
+          {/* Only this button navigates; the rest of the card is not a link. */}
+          <Link
+            href={href}
+            aria-label={'View case study: ' + project.title}
+            title={'View case study: ' + project.title}
+            data-cursor="View"
+            className="group/arrow relative z-10 flex size-11 shrink-0 cursor-pointer items-center justify-center rounded-full border border-line bg-surface-2 shadow-pill transition-[transform,box-shadow,border-color] duration-300 hover:rotate-45 hover:border-accent hover:shadow-card focus-visible:rotate-45 active:scale-90"
           >
-            <span className="flex size-7 items-center justify-center rounded-full bg-accent text-accent-ink">
-              <ArrowUpRight weight="bold" className="size-3.5" />
+            <span className="flex size-7 items-center justify-center rounded-full bg-accent text-accent-ink transition-transform duration-300 group-hover/arrow:scale-110">
+              <ArrowUpRight aria-hidden weight="bold" className="size-3.5" />
             </span>
-          </span>
+          </Link>
         </div>
       </div>
     </article>
