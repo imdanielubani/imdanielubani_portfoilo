@@ -163,6 +163,7 @@ const homeSections: SectionInput[] = [
       eyebrow: '// How it works',
       heading: 'No agencies. Just me, fully in on your product.',
       headingAccent: 'fully in on your product.',
+      profileTitle: 'Hire me today',
       stats: [
         { value: '3+', label: 'Years shipping' },
         { value: '5', label: 'Case studies' },

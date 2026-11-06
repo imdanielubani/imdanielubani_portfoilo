@@ -169,6 +169,8 @@ const dataSchemas = {
   }),
   howItWorks: z.object({
     ...heading,
+    /** Heading on the profile card, e.g. "Hire me today". */
+    profileTitle: text(80).default('Hire me today'),
     /** Small factual stats on the profile card, e.g. years of experience. */
     stats: z
       .array(z.object({ value: text(12).min(1), label: text(40).min(1) }))

@@ -7,13 +7,14 @@ import { AccentDot, ButtonLink } from '@/components/ui/button'
 import { AvailabilityBadge } from '@/components/ui/availability-badge'
 
 interface HireMeRowProps {
+  title: string
   stats: SectionData<'howItWorks'>['stats']
   engagement: SectionData<'howItWorks'>['engagement']
   site: SiteSettings
 }
 
 /** Tilted profile card with factual stats, beside the ways-to-work card. */
-export function HireMeRow({ stats, engagement, site }: HireMeRowProps) {
+export function HireMeRow({ title, stats, engagement, site }: HireMeRowProps) {
   const avatar = site.defaultSeo.ogImage
   return (
     <div className="grid gap-4 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
@@ -49,8 +50,11 @@ export function HireMeRow({ stats, engagement, site }: HireMeRowProps) {
           {stats.length > 0 ? (
             <dl className="mt-5 grid grid-cols-3 divide-x divide-line border-t border-line pt-4">
               {stats.map((stat) => (
-                <div key={stat.label} className="px-2 text-center first:pl-0 last:pr-0">
-                  <dt className="order-2 text-xs text-ink-muted">{stat.label}</dt>
+                <div
+                  key={stat.label}
+                  className="flex flex-col-reverse px-2 text-center first:pl-0 last:pr-0"
+                >
+                  <dt className="text-xs text-ink-muted">{stat.label}</dt>
                   <dd className="text-2xl font-medium tracking-tight text-ink tabular-nums">
                     {stat.value}
                   </dd>
@@ -60,7 +64,7 @@ export function HireMeRow({ stats, engagement, site }: HireMeRowProps) {
           ) : null}
         </div>
         {site.isAvailable ? <AvailabilityBadge /> : null}
-        <p className="mt-4 text-2xl text-ink">Hire me today</p>
+        <p className="mt-4 text-2xl text-ink">{title}</p>
         <p className="mt-2 max-w-[42ch] text-ink-muted">{site.availability}</p>
       </div>
 

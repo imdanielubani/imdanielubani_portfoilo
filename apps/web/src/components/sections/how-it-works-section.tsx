@@ -21,7 +21,12 @@ export function HowItWorksSection({ section, site }: HowItWorksSectionProps) {
         headingAccent={data.headingAccent}
       />
       <div className="pt-6">
-        <HireMeRow stats={data.stats} engagement={data.engagement} site={site} />
+        <HireMeRow
+          title={data.profileTitle}
+          stats={data.stats}
+          engagement={data.engagement}
+          site={site}
+        />
       </div>
       {data.booking.enabled ? (
         <div className="mt-16 md:mt-20">
