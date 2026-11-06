@@ -10,6 +10,7 @@ import { FeaturedProjectSection } from './featured-project-section'
 import { FullWidthImageSection } from './full-width-image-section'
 import { GallerySection } from './gallery-section'
 import { HeroSection } from './hero-section'
+import { HowItWorksSection } from './how-it-works-section'
 import { ImageTextSection } from './image-text-section'
 import { LogoCloudSection } from './logo-cloud-section'
 import { ProjectGridSection } from './project-grid-section'
@@ -65,6 +66,8 @@ export function renderSection(section: Section, { site, isFirst }: RenderContext
       return <FaqSection section={section} />
     case 'logoCloud':
       return <LogoCloudSection section={section} />
+    case 'howItWorks':
+      return <HowItWorksSection section={section} site={site} />
     case 'custom':
       return <CustomSection section={section} />
     default: {
