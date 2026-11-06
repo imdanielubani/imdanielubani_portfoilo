@@ -1,93 +1,150 @@
 import Link from 'next/link'
-import { ArrowUpRight } from 'lucide-react'
-import type { ProjectSummary } from '@du/types'
+import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr'
+import type { ProjectStatus, ProjectSummary } from '@du/types'
 import { cn } from '@/lib/cn'
 import { CmsImage } from '@/components/media/cms-image'
-import { ProjectStatusBadge } from './project-status'
+
+const STATUS_LABEL: Record<ProjectStatus, string> = {
+  live: 'Live',
+  'in-development': 'In development',
+  completed: 'Completed',
+  archived: 'Archived',
+}
 
 interface ProjectCardProps {
   project: ProjectSummary
-  index?: number
-  size?: 'default' | 'large'
+  layout?: 'split' | 'stacked'
+  /** For split cards: put the image on the left instead of the right. */
+  imageFirst?: boolean
   headingLevel?: 'h2' | 'h3'
   className?: string
 }
 
-const MAX_TAGS = 4
-
 export function ProjectCard({
   project,
-  index,
-  size = 'default',
+  layout = 'stacked',
+  imageFirst = false,
   headingLevel = 'h3',
   className,
 }: ProjectCardProps) {
   const Heading = headingLevel
-  const extra = project.technologies.length - MAX_TAGS
+  const href = '/projects/' + project.slug
+  const isSplit = layout === 'split'
   return (
-    <article className={cn('group relative', className)} data-reveal>
-      <Link
-        href={'/projects/' + project.slug}
-        className="block rounded-[var(--radius-xl)] focus-visible:outline-offset-4"
-        data-cursor="View"
-        aria-label={project.title + ' \u2014 ' + project.subtitle}
+    <article
+      className={cn(
+        'group relative grid overflow-hidden rounded-[var(--radius-xl)] border border-line bg-surface-2 shadow-card transition-[transform,box-shadow,border-color] duration-300 ease-[var(--ease-out)] hover:-translate-y-1 hover:border-line-strong hover:shadow-float',
+        isSplit && 'md:grid-cols-2',
+        className,
+      )}
+      data-reveal
+    >
+      <div
+        className={cn(
+          'relative overflow-hidden bg-surface',
+          isSplit ? 'aspect-[16/11] md:aspect-auto md:min-h-[20rem]' : 'aspect-[16/10]',
+          isSplit && imageFirst && 'md:order-first',
+          isSplit && !imageFirst && 'md:order-last',
+        )}
       >
-        <div
-          className={cn(
-            'relative overflow-hidden rounded-[var(--radius-xl)] bg-surface',
-            size === 'large' ? 'aspect-[16/10]' : 'aspect-[4/3]',
-          )}
-        >
-          <CmsImage
-            media={project.thumbnail}
-            sizes={
-              size === 'large'
-                ? '(min-width: 1024px) 66vw, 100vw'
-                : '(min-width: 768px) 50vw, 100vw'
-            }
-            className="transition-transform duration-[1.2s] ease-[var(--ease-out)] group-hover:scale-[1.05]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
-          <div className="absolute top-4 left-4 flex gap-2">
-            <ProjectStatusBadge status={project.status} />
+        <CmsImage
+          media={project.thumbnail}
+          sizes={isSplit ? '(min-width: 768px) 480px, 100vw' : '(min-width: 768px) 480px, 100vw'}
+          className="transition-transform duration-700 ease-[var(--ease-out)] group-hover:scale-[1.04]"
+        />
+      </div>
+
+      <div className="flex flex-col p-6 md:p-7">
+        <Heading className="text-h3 text-ink">
+          <Link href={href} className="after:absolute after:inset-0 after:content-['']">
+            {project.title}
+            <span className="text-ink-muted">: {project.subtitle}</span>
+          </Link>
+        </Heading>
+        <ul className="mt-3 flex flex-wrap gap-2" aria-label="Project details">
+          <li className="chip">{project.category.name}</li>
+          <li className="chip">{STATUS_LABEL[project.status]}</li>
+          {project.timeline ? <li className="chip">{project.timeline}</li> : null}
+        </ul>
+        <p className="mt-4 line-clamp-3 text-ink-muted">{project.summary}</p>
+
+        <div className="mt-auto flex items-center justify-between gap-4 border-t border-line pt-5">
+          <div className="flex min-w-0 items-center gap-3">
+            <span
+              aria-hidden
+              className="flex size-11 shrink-0 items-center justify-center rounded-[12px] bg-accent-soft text-lg font-semibold text-accent"
+            >
+              {project.title.charAt(0)}
+            </span>
+            <span className="min-w-0 leading-tight">
+              <span className="block truncate text-ink">{project.industry}</span>
+              <span className="block truncate text-sm text-ink-muted">{project.role}</span>
+            </span>
           </div>
-          <span className="absolute right-4 bottom-4 inline-flex size-12 translate-y-3 items-center justify-center rounded-full bg-accent text-accent-ink opacity-0 transition-[opacity,transform] duration-500 group-hover:translate-y-0 group-hover:opacity-100">
-            <ArrowUpRight aria-hidden className="size-5" />
+          <span
+            aria-hidden
+            className="relative z-10 flex size-11 shrink-0 items-center justify-center rounded-full border border-line bg-surface-2 shadow-pill transition-transform duration-300 group-hover:rotate-45"
+          >
+            <span className="flex size-7 items-center justify-center rounded-full bg-accent text-accent-ink">
+              <ArrowUpRight weight="bold" className="size-3.5" />
+            </span>
           </span>
         </div>
-      </Link>
-
-      <div className="mt-6 flex items-start justify-between gap-6">
-        <div className="min-w-0">
-          <p className="mb-2 font-mono text-[0.7rem] tracking-wider text-ink-subtle uppercase">
-            {typeof index === 'number' ? String(index + 1).padStart(2, '0') + ' \u00b7 ' : ''}
-            {project.category.name}
-            {project.timeline ? ' \u00b7 ' + project.timeline : ''}
-          </p>
-          <Heading className="text-h3 font-medium">
-            <Link
-              href={'/projects/' + project.slug}
-              className="transition-colors hover:text-accent"
-            >
-              {project.title}
-            </Link>
-          </Heading>
-          <p className="mt-1 text-ink-muted">{project.subtitle}</p>
-        </div>
       </div>
-      <ul className="mt-4 flex flex-wrap gap-2" aria-label="Technologies">
-        {project.technologies.slice(0, MAX_TAGS).map((tech) => (
-          <li
-            key={tech.slug}
-            className="rounded-full border border-line px-3 py-1 text-xs text-ink-muted"
-          >
-            {tech.name}
-          </li>
-        ))}
-        {extra > 0 ? (
-          <li className="rounded-full px-2 py-1 text-xs text-ink-subtle">+{extra}</li>
-        ) : null}
-      </ul>
     </article>
+  )
+}
+
+/**
+ * Lays out cards in the reference rhythm: a full-width split card, then a pair of
+ * stacked cards, repeating, with split cards alternating their image side.
+ */
+export function ProjectCardGrid({
+  projects,
+  headingLevel = 'h3',
+}: {
+  projects: ProjectSummary[]
+  headingLevel?: 'h2' | 'h3'
+}) {
+  const rows: { split?: ProjectSummary; pair?: ProjectSummary[] }[] = []
+  let index = 0
+  while (index < projects.length) {
+    const current = projects[index]
+    if (!current) break
+    if (rows.length % 2 === 0) {
+      rows.push({ split: current })
+      index += 1
+    } else {
+      rows.push({ pair: projects.slice(index, index + 2) })
+      index += 2
+    }
+  }
+  let splitCount = 0
+  return (
+    <div className="grid gap-6">
+      {rows.map((row) => {
+        if (row.split) {
+          const imageFirst = splitCount % 2 === 1
+          splitCount += 1
+          return (
+            <ProjectCard
+              key={row.split.id}
+              project={row.split}
+              layout="split"
+              imageFirst={imageFirst}
+              headingLevel={headingLevel}
+            />
+          )
+        }
+        const pair = row.pair ?? []
+        return (
+          <div key={pair.map((p) => p.id).join('-')} className="grid gap-6 md:grid-cols-2">
+            {pair.map((project) => (
+              <ProjectCard key={project.id} project={project} headingLevel={headingLevel} />
+            ))}
+          </div>
+        )
+      })}
+    </div>
   )
 }

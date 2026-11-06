@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-const MINUTE_MS = 60_000
+const REFRESH_MS = 15_000
 
 function format(timeZone: string): string {
   return new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone }).format(
@@ -17,13 +17,9 @@ export function LocalTime({ timeZone }: { timeZone: string }) {
   useEffect(() => {
     const update = () => setTime(format(timeZone))
     update()
-    const id = window.setInterval(update, MINUTE_MS / 4)
+    const id = window.setInterval(update, REFRESH_MS)
     return () => window.clearInterval(id)
   }, [timeZone])
 
-  return (
-    <time suppressHydrationWarning className="tabular-nums">
-      {time ?? '--:--'}
-    </time>
-  )
+  return <time className="tabular-nums">{time ?? '--:--'}</time>
 }
