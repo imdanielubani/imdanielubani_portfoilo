@@ -1,7 +1,7 @@
 import type { SectionOf } from '@du/schemas'
 import { cn } from '@/lib/cn'
 import { CmsImage } from '@/components/media/cms-image'
-import { SectionShell, isDarkBackground } from '@/components/layout/section-shell'
+import { SectionShell } from '@/components/layout/section-shell'
 import { SectionHeader } from '@/components/typography/section-header'
 
 export function GallerySection({ section }: { section: SectionOf<'gallery'> }) {
@@ -9,11 +9,7 @@ export function GallerySection({ section }: { section: SectionOf<'gallery'> }) {
   const isMasonry = data.layout === 'masonry'
   return (
     <SectionShell settings={settings}>
-      <SectionHeader
-        eyebrow={data.eyebrow}
-        heading={data.heading}
-        onDark={isDarkBackground(settings)}
-      />
+      <SectionHeader eyebrow={data.eyebrow} heading={data.heading} />
       <div
         className={cn(
           isMasonry

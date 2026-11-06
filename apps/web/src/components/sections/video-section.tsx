@@ -1,5 +1,5 @@
 import type { SectionOf } from '@du/schemas'
-import { SectionShell, isDarkBackground } from '@/components/layout/section-shell'
+import { SectionShell } from '@/components/layout/section-shell'
 import { SectionHeader } from '@/components/typography/section-header'
 import { toEmbedUrl } from '@/lib/video'
 
@@ -9,11 +9,7 @@ export function VideoSection({ section }: { section: SectionOf<'video'> }) {
   if (!embed) return null
   return (
     <SectionShell settings={settings}>
-      <SectionHeader
-        eyebrow={data.eyebrow}
-        heading={data.heading}
-        onDark={isDarkBackground(settings)}
-      />
+      <SectionHeader eyebrow={data.eyebrow} heading={data.heading} />
       <figure data-reveal>
         <div className="relative aspect-video overflow-hidden rounded-[var(--radius-xl)] bg-surface">
           {data.provider === 'file' ? (

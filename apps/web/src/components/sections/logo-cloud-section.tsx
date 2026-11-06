@@ -2,19 +2,18 @@ import Image from 'next/image'
 import type { SectionOf } from '@du/schemas'
 import { isExternalHref, isSafeHref } from '@du/utils'
 import { cn } from '@/lib/cn'
-import { SectionShell, isDarkBackground } from '@/components/layout/section-shell'
+import { SectionShell } from '@/components/layout/section-shell'
 import { SectionHeader } from '@/components/typography/section-header'
 
 export function LogoCloudSection({ section }: { section: SectionOf<'logoCloud'> }) {
   const { data, settings } = section
-  const onDark = isDarkBackground(settings)
   return (
     <SectionShell settings={settings}>
-      <SectionHeader eyebrow={data.eyebrow} heading={data.heading} onDark={onDark} />
+      <SectionHeader eyebrow={data.eyebrow} heading={data.heading} />
       <ul
         className={cn(
           'grid grid-cols-2 gap-px overflow-hidden rounded-[var(--radius-xl)] sm:grid-cols-3 lg:grid-cols-5',
-          onDark ? 'bg-on-teal/15' : 'bg-line',
+          'bg-line',
         )}
       >
         {data.items.map((item) => {
@@ -34,7 +33,7 @@ export function LogoCloudSection({ section }: { section: SectionOf<'logoCloud'> 
               key={item.name}
               className={cn(
                 'flex min-h-28 items-center justify-center p-6 text-center',
-                onDark ? 'bg-teal-900' : 'bg-canvas',
+                'bg-canvas',
               )}
               data-reveal
             >

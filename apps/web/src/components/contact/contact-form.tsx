@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { AnimatePresence, motion } from 'motion/react'
-import { ArrowUpRight, CircleAlert, CircleCheck, LoaderCircle } from 'lucide-react'
+import { ArrowUpRight, CheckCircle, CircleNotch, WarningCircle } from '@phosphor-icons/react'
 import { useEffect, useId, useRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { contactFormSchema, type ContactFormValues } from '@du/schemas'
@@ -147,10 +147,10 @@ export function ContactForm({ projectTypes, fallbackEmail }: ContactFormProps) {
       </div>
 
       <div className="mt-8 flex justify-end">
-        <Button type="submit" size="lg" disabled={isSubmitting} data-magnetic="">
+        <Button type="submit" size="lg" variant="solid" disabled={isSubmitting} data-magnetic="">
           {isSubmitting ? (
             <>
-              <LoaderCircle aria-hidden className="size-4 animate-spin" />
+              <CircleNotch aria-hidden weight="bold" className="size-4 animate-spin" />
               Sending
             </>
           ) : (
@@ -172,7 +172,11 @@ export function ContactForm({ projectTypes, fallbackEmail }: ContactFormProps) {
               exit={{ opacity: 0 }}
               className="flex items-start gap-3 rounded-[var(--radius-lg)] border border-success/30 bg-success/10 p-4 text-ink"
             >
-              <CircleCheck aria-hidden className="mt-0.5 size-5 shrink-0 text-success" />
+              <CheckCircle
+                aria-hidden
+                weight="fill"
+                className="mt-0.5 size-5 shrink-0 text-success"
+              />
               Thanks, your message has been sent. I&apos;ll get back to you soon.
             </motion.p>
           ) : null}
@@ -185,7 +189,11 @@ export function ContactForm({ projectTypes, fallbackEmail }: ContactFormProps) {
               className="flex items-start gap-3 rounded-[var(--radius-lg)] border border-danger/30 bg-danger/10 p-4 text-ink"
               role="alert"
             >
-              <CircleAlert aria-hidden className="mt-0.5 size-5 shrink-0 text-danger" />
+              <WarningCircle
+                aria-hidden
+                weight="fill"
+                className="mt-0.5 size-5 shrink-0 text-danger"
+              />
               <p>
                 {status.failure.message}{' '}
                 <a
