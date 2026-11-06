@@ -28,9 +28,8 @@ const homeSections: SectionInput[] = [
       showAvailability: true,
       image: media.portrait,
       ctas: [
-        { label: 'Explore My Work', href: '/projects', variant: 'primary' },
-        { label: 'Let’s Work Together', href: '/contact', variant: 'secondary' },
-        { label: 'Download My Resume', href: RESUME_URL, variant: 'ghost', download: true },
+        { label: 'Download CV', href: RESUME_URL, variant: 'secondary', download: true },
+        { label: 'Let’s connect', href: '/contact', variant: 'primary' },
       ],
     },
   },
@@ -85,6 +84,41 @@ const homeSections: SectionInput[] = [
     },
   },
   {
+    id: 'home-philosophy',
+    type: 'services',
+    data: {
+      eyebrow: '// Working philosophy',
+      heading: 'How I approach engineering.',
+      headingAccent: 'engineering.',
+      items: [
+        {
+          title: 'Product mindset',
+          description:
+            'I care about how systems are designed, how people experience them, and how they evolve as a business grows.',
+          icon: 'compass',
+        },
+        {
+          title: 'Built for real conditions',
+          description:
+            'Software has to perform under real-world load, flaky networks and messy data, not just in a demo.',
+          icon: 'shield',
+        },
+        {
+          title: 'End-to-end ownership',
+          description:
+            'From architecture and data modeling to UI and deployment, I take responsibility for the whole outcome.',
+          icon: 'layers',
+        },
+        {
+          title: 'Clarity over cleverness',
+          description:
+            'Readable code, clear APIs and documented decisions make products easier to grow and hand over.',
+          icon: 'sparkles',
+        },
+      ],
+    },
+  },
+  {
     id: 'home-testimonials',
     type: 'testimonials',
     data: {
@@ -118,41 +152,6 @@ const homeSections: SectionInput[] = [
       inviteTitle: 'Worked with me? I’d love to hear how it went.',
       inviteBody:
         'A short recommendation helps others understand what working with me is like. It will appear here once added.',
-    },
-  },
-  {
-    id: 'home-philosophy',
-    type: 'services',
-    data: {
-      eyebrow: '// Working philosophy',
-      heading: 'How I approach engineering.',
-      headingAccent: 'engineering.',
-      items: [
-        {
-          title: 'Product mindset',
-          description:
-            'I care about how systems are designed, how people experience them, and how they evolve as a business grows.',
-          icon: 'compass',
-        },
-        {
-          title: 'Built for real conditions',
-          description:
-            'Software has to perform under real-world load, flaky networks and messy data, not just in a demo.',
-          icon: 'shield',
-        },
-        {
-          title: 'End-to-end ownership',
-          description:
-            'From architecture and data modeling to UI and deployment, I take responsibility for the whole outcome.',
-          icon: 'layers',
-        },
-        {
-          title: 'Clarity over cleverness',
-          description:
-            'Readable code, clear APIs and documented decisions make products easier to grow and hand over.',
-          icon: 'sparkles',
-        },
-      ],
     },
   },
   {
