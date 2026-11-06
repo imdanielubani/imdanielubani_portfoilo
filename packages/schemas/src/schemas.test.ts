@@ -57,3 +57,41 @@ describe('contact submission', () => {
     expect(isLikelyBot({ website: '', startedAt: 1_000 }, 10_000)).toBe(false)
   })
 })
+
+describe('howItWorks section', () => {
+  const base = {
+    id: 'how',
+    type: 'howItWorks',
+    data: {
+      heading: 'How it works',
+      engagement: { title: 'Work with me' },
+      booking: {
+        services: [{ id: 'intro-call', title: 'Intro call', durationMinutes: 30 }],
+        slotTimes: ['10:00', '14:30'],
+      },
+    },
+  }
+
+  it('applies booking defaults', () => {
+    const { sections } = parseSections([base])
+    const section = sections[0]
+    expect(section?.type).toBe('howItWorks')
+    if (section?.type !== 'howItWorks') return
+    expect(section.data.booking.workingDays).toEqual([1, 2, 3, 4, 5])
+    expect(section.data.booking.timezone).toBe('Africa/Lagos')
+    expect(section.data.engagement.ctaHref).toBe('/contact')
+  })
+
+  it('rejects malformed slot times', () => {
+    const bad = {
+      ...base,
+      data: { ...base.data, booking: { ...base.data.booking, slotTimes: ['25:00'] } },
+    }
+    expect(parseSections([bad]).sections).toHaveLength(0)
+  })
+
+  it('rejects a booking with no services', () => {
+    const bad = { ...base, data: { ...base.data, booking: { ...base.data.booking, services: [] } } }
+    expect(parseSections([bad]).sections).toHaveLength(0)
+  })
+})

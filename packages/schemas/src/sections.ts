@@ -167,6 +167,49 @@ const dataSchemas = {
       .min(1)
       .max(40),
   }),
+  howItWorks: z.object({
+    ...heading,
+    /** Small factual stats on the profile card, e.g. years of experience. */
+    stats: z
+      .array(z.object({ value: text(12).min(1), label: text(40).min(1) }))
+      .max(4)
+      .default([]),
+    engagement: z.object({
+      title: text(80).min(1),
+      description: optionalText(300),
+      highlights: z.array(text(120).min(1)).max(8).default([]),
+      ctaLabel: text(40).default("Let's connect"),
+      ctaHref: hrefSchema.default('/contact'),
+    }),
+    booking: z.object({
+      enabled: z.boolean().default(true),
+      title: text(80).default('Book a call'),
+      note: optionalText(200),
+      services: z
+        .array(
+          z.object({
+            id: z.string().regex(/^[a-z0-9-]{1,40}$/),
+            title: text(80).min(1),
+            durationMinutes: z.number().int().min(10).max(240),
+            description: optionalText(200),
+            /** Optional, e.g. "Free" or "$120". Omit to show no price. */
+            priceLabel: optionalText(24),
+          }),
+        )
+        .min(1)
+        .max(6),
+      /** Start times offered on bookable days, 24h "HH:MM" in the owner's timezone. */
+      slotTimes: z
+        .array(z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/))
+        .min(1)
+        .max(12),
+      /** Bookable weekdays, 0 = Sunday ... 6 = Saturday. */
+      workingDays: z.array(z.number().int().min(0).max(6)).min(1).max(7).default([1, 2, 3, 4, 5]),
+      timezone: text(60).default('Africa/Lagos'),
+      minNoticeDays: z.number().int().min(0).max(30).default(1),
+      daysAhead: z.number().int().min(7).max(120).default(45),
+    }),
+  }),
   custom: z.object({
     eyebrow: optionalText(60),
     heading: optionalText(200),
@@ -210,6 +253,7 @@ export const sectionSchema = z.discriminatedUnion('type', [
   sectionOf('video'),
   sectionOf('faq'),
   sectionOf('logoCloud'),
+  sectionOf('howItWorks'),
   sectionOf('custom'),
 ])
 
