@@ -118,6 +118,9 @@ const dataSchemas = {
       )
       .max(24)
       .default([]),
+    /** Shown instead of quotes until real testimonials are added. */
+    inviteTitle: text(120).default('Worked with me?'),
+    inviteBody: optionalText(400),
   }),
   services: z.object({
     ...heading,

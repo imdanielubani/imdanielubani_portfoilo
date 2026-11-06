@@ -53,7 +53,7 @@ export function renderSection(section: Section, { site, isFirst }: RenderContext
     case 'statistics':
       return <StatisticsSection section={section} />
     case 'testimonials':
-      return <TestimonialsSection section={section} />
+      return <TestimonialsSection section={section} site={site} />
     case 'services':
       return <ServicesSection section={section} />
     case 'cta':
