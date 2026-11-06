@@ -5,7 +5,8 @@ import { ArrowLeft, CaretRight } from '@phosphor-icons/react'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import type { SectionData } from '@du/schemas'
 import { cn } from '@/lib/cn'
-import { formatDuration } from '@/lib/booking'
+import { formatDuration, type IsoDate } from '@/lib/booking'
+import { TimeStep } from './time-step'
 
 export type BookingConfig = SectionData<'howItWorks'>['booking']
 type Step = 1 | 2 | 3
@@ -27,6 +28,8 @@ export function BookingWidget({ booking }: BookingWidgetProps) {
   const [step, setStep] = useState<Step>(1)
   const [direction, setDirection] = useState(1)
   const [serviceId, setServiceId] = useState<string | null>(null)
+  const [date, setDate] = useState<IsoDate | null>(null)
+  const [time, setTime] = useState<string | null>(null)
   const bodyRef = useRef<HTMLDivElement>(null)
   const hasInteracted = useRef(false)
 
@@ -99,9 +102,28 @@ export function BookingWidget({ booking }: BookingWidgetProps) {
                   />
                 }
               />
+            ) : step === 2 ? (
+              <TimeStep
+                booking={booking}
+                date={date}
+                time={time}
+                onDateChange={(next) => {
+                  setDate(next)
+                  setTime(null)
+                }}
+                onTimeChange={setTime}
+                header={<BackButton onClick={() => goTo(1)} />}
+                footer={
+                  <NextButton
+                    disabled={!date || !time}
+                    onClick={() => goTo(3)}
+                    label="Continue to your details"
+                  />
+                }
+              />
             ) : (
               <div className="flex flex-1 flex-col">
-                <BackButton onClick={() => goTo((step - 1) as Step)} />
+                <BackButton onClick={() => goTo(2)} />
               </div>
             )}
           </motion.div>
