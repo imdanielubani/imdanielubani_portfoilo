@@ -3,7 +3,10 @@ import { ArrowUpRight } from '@phosphor-icons/react/dist/ssr'
 import type { SectionOf } from '@du/schemas'
 import type { SimpleIcon } from 'simple-icons'
 import { getSettings, getSkills } from '@/lib/content'
+import { usernameFromUrl } from '@/lib/github/contributions'
+import { getContributions } from '@/lib/github/fetch-contributions'
 import { techIcon } from '@/lib/tech-icons'
+import { ContributionGraph } from '@/components/github/contribution-graph'
 import { SectionShell } from '@/components/layout/section-shell'
 import { TechMarquee } from '@/components/skills/tech-marquee'
 import { SectionHeader } from '@/components/typography/section-header'
@@ -16,8 +19,10 @@ export async function SkillsGridSection({ section }: { section: SectionOf<'skill
     data.categorySlugs.length > 0 ? all.filter((c) => data.categorySlugs.includes(c.slug)) : all
   const skills = categories.flatMap((c) => c.skills)
   const icons = skills.map((s) => techIcon(s.name)).filter((i): i is SimpleIcon => Boolean(i))
-  const github = site.socials.find((s) => s.platform === 'github')
-  const handle = github ? '@' + github.url.replace(/\/+$/, '').split('/').pop() : site.siteName
+  const githubUrl = site.socials.find((s) => s.platform === 'github')?.url
+  const username = githubUrl ? usernameFromUrl(githubUrl) : null
+  const contributions = username ? await getContributions(username) : null
+  const handle = username ? '@' + username : site.siteName
   return (
     <SectionShell settings={settings}>
       <SectionHeader
@@ -32,7 +37,18 @@ export async function SkillsGridSection({ section }: { section: SectionOf<'skill
       >
         <div className="flex flex-wrap items-end justify-between gap-4 p-6 md:p-7">
           <div>
-            <p className="font-medium text-ink">{handle}</p>
+            {githubUrl && username ? (
+              <a
+                href={githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-medium text-ink transition-colors hover:text-accent"
+              >
+                {handle}
+              </a>
+            ) : (
+              <p className="font-medium text-ink">{handle}</p>
+            )}
             <p className="text-sm text-ink-muted">
               {skills.length} tools across {categories.length} disciplines
             </p>
@@ -50,6 +66,11 @@ export async function SkillsGridSection({ section }: { section: SectionOf<'skill
             </Link>
           ) : null}
         </div>
+        {contributions ? (
+          <div className="border-t border-line px-6 pt-6 pb-5 md:px-7">
+            <ContributionGraph calendar={contributions} />
+          </div>
+        ) : null}
         <div className="border-t border-line py-6">
           <TechMarquee icons={icons} />
         </div>
