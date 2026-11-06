@@ -27,7 +27,8 @@ export function CtaButton({ cta, size = 'md', className }: CtaButtonProps) {
     >
       {variant === 'primary' && !cta.download ? <AccentDot /> : null}
       <span>{cta.label}</span>
-      {cta.download ? (
+      {/* Outline download buttons stay plain text, like "Download CV" in the reference. */}
+      {cta.download && variant === 'secondary' ? null : cta.download ? (
         <DownloadSimple
           aria-hidden
           className="size-4 transition-transform duration-200 group-hover/btn:translate-y-0.5"
