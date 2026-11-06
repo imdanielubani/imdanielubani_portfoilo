@@ -32,19 +32,28 @@ export type ButtonVariantProps = VariantProps<typeof buttonVariants>
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>, ButtonVariantProps {}
 
 export function Button({ className, variant, size, type = 'button', ...props }: ButtonProps) {
-  return <button type={type} className={cn(buttonVariants({ variant, size }), className)} {...props} />
+  return (
+    <button type={type} className={cn(buttonVariants({ variant, size }), className)} {...props} />
+  )
 }
 
 export interface ButtonLinkProps
-  extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>,
-    ButtonVariantProps {
+  extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>, ButtonVariantProps {
   href: string
   external?: boolean
   children: ReactNode
 }
 
 /** A link styled as a button. Internal paths use next/link for client navigation. */
-export function ButtonLink({ href, external, className, variant, size, download, ...props }: ButtonLinkProps) {
+export function ButtonLink({
+  href,
+  external,
+  className,
+  variant,
+  size,
+  download,
+  ...props
+}: ButtonLinkProps) {
   const classes = cn(buttonVariants({ variant, size }), className)
   const isInternal = href.startsWith('/') && !external && !download
   if (isInternal) return <Link href={href} className={classes} {...props} />

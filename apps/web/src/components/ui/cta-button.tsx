@@ -10,7 +10,11 @@ interface CtaButtonProps {
   className?: string
 }
 
-const darkVariant = { primary: 'onDark', secondary: 'onDarkOutline', ghost: 'onDarkOutline' } as const
+const darkVariant = {
+  primary: 'onDark',
+  secondary: 'onDarkOutline',
+  ghost: 'onDarkOutline',
+} as const
 
 /** Renders a CMS-authored call to action. Unsafe hrefs are dropped. */
 export function CtaButton({ cta, size = 'md', onDark, className }: CtaButtonProps) {

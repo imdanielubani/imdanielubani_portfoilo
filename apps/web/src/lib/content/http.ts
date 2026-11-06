@@ -27,7 +27,8 @@ export async function apiGet<T>(path: string, options: ApiGetOptions): Promise<T
   }
 
   if (response.status === 404) throw new ContentError('Not found', 404, path)
-  if (!response.ok) throw new ContentError('Content API responded ' + response.status, response.status, path)
+  if (!response.ok)
+    throw new ContentError('Content API responded ' + response.status, response.status, path)
 
   let body: ApiResponse<T>
   try {
@@ -36,7 +37,11 @@ export async function apiGet<T>(path: string, options: ApiGetOptions): Promise<T
     throw new ContentError('Content API returned invalid JSON', response.status, path)
   }
   if (!body.success || body.data === null) {
-    throw new ContentError(body.error?.message ?? 'Content API returned an error', response.status, path)
+    throw new ContentError(
+      body.error?.message ?? 'Content API returned an error',
+      response.status,
+      path,
+    )
   }
   return body.data
 }

@@ -1,4 +1,9 @@
-import type { InputHTMLAttributes, LabelHTMLAttributes, SelectHTMLAttributes, TextareaHTMLAttributes } from 'react'
+import type {
+  InputHTMLAttributes,
+  LabelHTMLAttributes,
+  SelectHTMLAttributes,
+  TextareaHTMLAttributes,
+} from 'react'
 import { cn } from '@/lib/cn'
 
 const control =
@@ -13,7 +18,12 @@ export function Input({ className, ...props }: InputHTMLAttributes<HTMLInputElem
 }
 
 export function Textarea({ className, ...props }: TextareaHTMLAttributes<HTMLTextAreaElement>) {
-  return <textarea className={cn(control, 'min-h-40 resize-y py-3 leading-relaxed', className)} {...props} />
+  return (
+    <textarea
+      className={cn(control, 'min-h-40 resize-y py-3 leading-relaxed', className)}
+      {...props}
+    />
+  )
 }
 
 export function Select({ className, children, ...props }: SelectHTMLAttributes<HTMLSelectElement>) {
@@ -27,7 +37,13 @@ export function Select({ className, children, ...props }: SelectHTMLAttributes<H
         viewBox="0 0 16 16"
         className="pointer-events-none absolute top-1/2 right-4 size-4 -translate-y-1/2 text-ink-muted"
       >
-        <path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        <path
+          d="M4 6l4 4 4-4"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+        />
       </svg>
     </div>
   )

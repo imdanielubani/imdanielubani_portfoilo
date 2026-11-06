@@ -47,7 +47,10 @@ export function listProjects(projects: Project[] = seed.projects): ProjectSummar
   return [...projects].sort(byOrder).map(toSummary)
 }
 
-export function findProjectDetail(slug: string, projects: Project[] = seed.projects): ProjectDetail | null {
+export function findProjectDetail(
+  slug: string,
+  projects: Project[] = seed.projects,
+): ProjectDetail | null {
   const ordered = [...projects].sort(byOrder)
   const index = ordered.findIndex((p) => p.slug === slug)
   const project = ordered[index]

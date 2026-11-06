@@ -31,7 +31,9 @@ export function SectionHeader({
     <div
       className={cn(
         'mb-12 flex flex-col gap-6 md:mb-16',
-        align === 'center' ? 'items-center text-center' : 'md:flex-row md:items-end md:justify-between',
+        align === 'center'
+          ? 'items-center text-center'
+          : 'md:flex-row md:items-end md:justify-between',
         className,
       )}
     >

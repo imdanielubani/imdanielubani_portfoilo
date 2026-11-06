@@ -13,8 +13,14 @@ function words(text: string, accent: boolean, keyPrefix: string) {
       /^\s+$/.test(part) ? (
         <Fragment key={keyPrefix + index}> </Fragment>
       ) : (
-        <span key={keyPrefix + index} className="inline-block overflow-hidden pb-[0.08em] align-bottom">
-          <span data-word className={'inline-block will-change-transform' + (accent ? ' accent-serif' : '')}>
+        <span
+          key={keyPrefix + index}
+          className="inline-block overflow-hidden pb-[0.08em] align-bottom"
+        >
+          <span
+            data-word
+            className={'inline-block will-change-transform' + (accent ? ' accent-serif' : '')}
+          >
             {part}
           </span>
         </span>

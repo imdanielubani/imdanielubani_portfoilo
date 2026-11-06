@@ -49,7 +49,8 @@ function animateWords(heading: HTMLElement, delay: number) {
 }
 
 function revealVars(el: HTMLElement): gsap.TweenVars {
-  if (el.dataset.reveal === 'image') return { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, autoAlpha: 1 }
+  if (el.dataset.reveal === 'image')
+    return { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, autoAlpha: 1 }
   return { y: 0, autoAlpha: 1 }
 }
 
