@@ -5,7 +5,14 @@ import type { MediaAsset } from '@du/schemas'
  * as temporary artwork: replace them from the CMS media library with real project
  * screenshots. Project covers are illustrative, not screenshots of the products.
  */
-function image(id: string, url: string, alt: string, width: number, height: number, focalY = 50): MediaAsset {
+function image(
+  id: string,
+  url: string,
+  alt: string,
+  width: number,
+  height: number,
+  focalY = 50,
+): MediaAsset {
   return { id, url, alt, kind: 'image', width, height, focalX: 50, focalY }
 }
 
@@ -18,10 +25,34 @@ export const media = {
     1448,
     32,
   ),
-  coverA: image('media-cover-a', '/images/projects/project-damas.avif', 'Placeholder cover image', 1024, 706),
-  coverB: image('media-cover-b', '/images/projects/project-kavi.avif', 'Placeholder cover image', 512, 353),
-  coverC: image('media-cover-c', '/images/projects/project-najm.avif', 'Placeholder cover image', 512, 353),
-  coverD: image('media-cover-d', '/images/projects/project-postwing.avif', 'Placeholder cover image', 512, 353),
+  coverA: image(
+    'media-cover-a',
+    '/images/projects/project-damas.avif',
+    'Placeholder cover image',
+    1024,
+    706,
+  ),
+  coverB: image(
+    'media-cover-b',
+    '/images/projects/project-kavi.avif',
+    'Placeholder cover image',
+    512,
+    353,
+  ),
+  coverC: image(
+    'media-cover-c',
+    '/images/projects/project-najm.avif',
+    'Placeholder cover image',
+    512,
+    353,
+  ),
+  coverD: image(
+    'media-cover-d',
+    '/images/projects/project-postwing.avif',
+    'Placeholder cover image',
+    512,
+    353,
+  ),
   resume: {
     id: 'media-resume',
     url: '/resume/daniel-ubani-resume.pdf',

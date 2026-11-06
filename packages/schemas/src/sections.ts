@@ -172,7 +172,10 @@ const dataSchemas = {
     heading: optionalText(200),
     headingAccent: optionalText(80),
     html: richText.default(''),
-    columns: z.array(z.object({ title: text(120), html: richText })).max(4).default([]),
+    columns: z
+      .array(z.object({ title: text(120), html: richText }))
+      .max(4)
+      .default([]),
   }),
 } as const
 

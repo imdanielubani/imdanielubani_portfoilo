@@ -1,7 +1,12 @@
 import type { SkillCategory } from '@du/types'
 import { slugify } from './slug'
 
-function category(order: number, name: string, description: string, skills: string[]): SkillCategory {
+function category(
+  order: number,
+  name: string,
+  description: string,
+  skills: string[],
+): SkillCategory {
   const slug = slugify(name)
   return {
     id: 'skillcat-' + slug,

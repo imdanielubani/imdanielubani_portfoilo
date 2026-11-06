@@ -75,10 +75,19 @@ export const projects: Project[] = [
       diagram: null,
     },
     features: [
-      { title: 'Live order boards', description: 'Department boards that update in real time as guests place requests.' },
-      { title: 'Smart-room controls', description: 'Guests control their room from the in-room tablet.' },
+      {
+        title: 'Live order boards',
+        description: 'Department boards that update in real time as guests place requests.',
+      },
+      {
+        title: 'Smart-room controls',
+        description: 'Guests control their room from the in-room tablet.',
+      },
       { title: 'TTLock integration', description: 'Smart lock integration for room access.' },
-      { title: 'SOS & intercom', description: 'Real-time SOS and intercom over WebSockets and Agora.' },
+      {
+        title: 'SOS & intercom',
+        description: 'Real-time SOS and intercom over WebSockets and Agora.',
+      },
     ],
     outcomes: ['The platform now runs the hotel’s full daily operations.'],
     lessons: [],
@@ -91,7 +100,7 @@ export const projects: Project[] = [
     relatedSlugs: ['nexryl-estateos', 'kedali'],
     seo: {
       ...NO_SEO,
-      title: 'Retiro Del Rocio — Hotel Operations Platform',
+      title: 'Retiro Del Rocio: Hotel Operations Platform',
       description:
         'Case study: a Laravel/Livewire and Flutter hotel operations platform with live order boards, smart-room controls, TTLock, and real-time SOS/intercom.',
     },
@@ -171,7 +180,7 @@ export const projects: Project[] = [
     relatedSlugs: ['cardcentrals', 'nexryl-estateos'],
     seo: {
       ...NO_SEO,
-      title: 'Pavocard — Multi-Country Fintech Platform',
+      title: 'Pavocard: Multi-Country Fintech Platform',
       description:
         'Case study: a gift card trading and payments platform for Nigeria and Ghana built with Flutter, Next.js, React/Vue and Node.js.',
     },
@@ -208,8 +217,9 @@ export const projects: Project[] = [
     heroImage: withAlt(media.coverC, 'Cardcentrals cover (placeholder image)'),
     order: 3,
     overview:
-      '<p>Cardcentrals is a Nigerian fintech gift card platform I built end to end — from UI design to a Flutter mobile app, a Next.js web app, a React admin, and Node.js/Express payment and transaction services.</p>',
-    problem: 'Deliver a complete gift card trading product, from design to payments, as a single engineer.',
+      '<p>Cardcentrals is a Nigerian fintech gift card platform I built end to end, from UI design to a Flutter mobile app, a Next.js web app, a React admin, and Node.js/Express payment and transaction services.</p>',
+    problem:
+      'Deliver a complete gift card trading product, from design to payments, as a single engineer.',
     objectives: [
       'Design the product UI.',
       'Build Flutter mobile and Next.js web clients.',
@@ -228,7 +238,10 @@ export const projects: Project[] = [
       diagram: null,
     },
     features: [
-      { title: 'End-to-end product', description: 'UI design, mobile app, web app and admin built by one engineer.' },
+      {
+        title: 'End-to-end product',
+        description: 'UI design, mobile app, web app and admin built by one engineer.',
+      },
       { title: 'Payments', description: 'Paystack and Reloadly integrations.' },
       { title: 'Secure auth', description: 'JWT authentication across clients.' },
     ],
@@ -243,7 +256,7 @@ export const projects: Project[] = [
     relatedSlugs: ['pavocard'],
     seo: {
       ...NO_SEO,
-      title: 'Cardcentrals — Nigerian Fintech Gift Card Platform',
+      title: 'Cardcentrals: Nigerian Fintech Gift Card Platform',
       description:
         'Case study: an end-to-end gift card platform with Flutter, Next.js, React admin and Node.js payment services.',
     },
@@ -270,12 +283,15 @@ export const projects: Project[] = [
     order: 4,
     overview:
       '<p>Kedali is an appointment booking system and companion website for a US non-emergency medical transportation startup. I built the booking system in Laravel and integrated it with a WordPress front end for a seamless patient booking flow.</p>',
-    problem: 'Patients need a simple way to book non-emergency medical transportation from the company website.',
+    problem:
+      'Patients need a simple way to book non-emergency medical transportation from the company website.',
     objectives: [
       'Build an appointment booking system in Laravel.',
       'Integrate booking with the existing WordPress front end.',
     ],
-    challenges: ['Connecting a Laravel booking backend to a WordPress website without breaking the patient flow.'],
+    challenges: [
+      'Connecting a Laravel booking backend to a WordPress website without breaking the patient flow.',
+    ],
     solution:
       '<p>A Laravel application manages appointments, and the WordPress front end hands patients into the booking flow so the experience feels like one product.</p>',
     architecture: {
@@ -284,7 +300,10 @@ export const projects: Project[] = [
       diagram: null,
     },
     features: [
-      { title: 'Appointment booking', description: 'Patients book non-emergency medical transport.' },
+      {
+        title: 'Appointment booking',
+        description: 'Patients book non-emergency medical transport.',
+      },
       { title: 'WordPress integration', description: 'Booking embedded into the company website.' },
     ],
     outcomes: ['A seamless patient booking flow between the website and the booking system.'],
@@ -298,7 +317,7 @@ export const projects: Project[] = [
     relatedSlugs: ['retiro-del-rocio'],
     seo: {
       ...NO_SEO,
-      title: 'Kedali — Medical Transportation Booking System',
+      title: 'Kedali: Medical Transportation Booking System',
       description:
         'Case study: a Laravel booking system and WordPress-integrated website for a US non-emergency medical transport startup.',
     },
@@ -319,14 +338,22 @@ export const projects: Project[] = [
     timeline: 'Ongoing',
     status: 'in-development',
     isFeatured: true,
-    technologies: tech(['Flutter', 'Next.js', 'NestJS', 'PostgreSQL', 'Redis', 'Firebase', 'OpenAI API']),
+    technologies: tech([
+      'Flutter',
+      'Next.js',
+      'NestJS',
+      'PostgreSQL',
+      'Redis',
+      'Firebase',
+      'OpenAI API',
+    ]),
     thumbnail: withAlt(media.coverA, 'Nexryl EstateOS cover (placeholder image)'),
     heroImage: withAlt(media.coverA, 'Nexryl EstateOS cover (placeholder image)'),
     order: 5,
     overview:
       '<p>Nexryl EstateOS is an ongoing personal project: an AI-assisted platform for running residential estates. It combines a Flutter app for residents, a Next.js admin, and a NestJS API on PostgreSQL and Redis.</p>',
     problem:
-      'Estate operations — visitors, payments, maintenance and emergencies — are usually spread across disconnected tools.',
+      'Estate operations (visitors, payments, maintenance and emergencies) are usually spread across disconnected tools.',
     objectives: [
       'Bring estate payments, visitor access and maintenance into one platform.',
       'Add AI chatbot support, reminders and predictive analytics.',
@@ -361,9 +388,9 @@ export const projects: Project[] = [
     relatedSlugs: ['retiro-del-rocio', 'pavocard'],
     seo: {
       ...NO_SEO,
-      title: 'Nexryl EstateOS — AI Smart Estate Management',
+      title: 'Nexryl EstateOS: AI Smart Estate Management',
       description:
-        'Case study: an AI estate management platform with Flutter, Next.js and NestJS — payments, QR visitor access, maintenance, SOS and an AI chatbot.',
+        'Case study: an AI estate management platform with Flutter, Next.js and NestJS, payments, QR visitor access, maintenance, SOS and an AI chatbot.',
     },
     updatedAt: UPDATED,
   },
