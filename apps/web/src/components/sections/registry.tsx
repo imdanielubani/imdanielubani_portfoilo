@@ -1,5 +1,6 @@
 import type { Section } from '@du/schemas'
 import type { SiteSettings } from '@du/types'
+import { PageMotion } from '@/components/motion/motion-root'
 import { ContactFormSection } from './contact-form-section'
 import { CtaSection } from './cta-section'
 import { CustomSection } from './custom-section'
@@ -35,7 +36,7 @@ export function renderSection(section: Section, { site, isFirst }: RenderContext
     case 'richText':
       return <RichTextSection section={section} />
     case 'imageText':
-      return <ImageTextSection section={section} isFirst={isFirst} />
+      return <ImageTextSection section={section} site={site} isFirst={isFirst} />
     case 'fullWidthImage':
       return <FullWidthImageSection section={section} />
     case 'gallery':
@@ -55,7 +56,7 @@ export function renderSection(section: Section, { site, isFirst }: RenderContext
     case 'services':
       return <ServicesSection section={section} />
     case 'cta':
-      return <CtaSection section={section} />
+      return <CtaSection section={section} site={site} />
     case 'contactForm':
       return <ContactFormSection section={section} />
     case 'video':
@@ -81,6 +82,7 @@ export function SectionRenderer({ sections, site }: { sections: Section[]; site:
           {renderSection(section, { site, isFirst: index === 0 })}
         </div>
       ))}
+      <PageMotion />
     </>
   )
 }

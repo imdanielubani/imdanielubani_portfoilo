@@ -24,10 +24,13 @@ function markReady() {
 }
 
 /** Smooth scrolling (desktop only), synced with ScrollTrigger through the GSAP ticker. */
+let lenisInstance: Lenis | null = null
+
 function useSmoothScroll() {
   useEffect(() => {
-    if (prefersReducedMotion() || !hasFinePointer()) return
+    if (lenisInstance || prefersReducedMotion() || !hasFinePointer()) return
     const lenis = new Lenis({ duration: 1.1, anchors: true, autoRaf: false })
+    lenisInstance = lenis
     lenis.on('scroll', ScrollTrigger.update)
     const tick = (time: number) => lenis.raf(time * 1000)
     gsap.ticker.add(tick)
@@ -35,6 +38,7 @@ function useSmoothScroll() {
     return () => {
       gsap.ticker.remove(tick)
       lenis.destroy()
+      lenisInstance = null
     }
   }, [])
 }
@@ -49,16 +53,18 @@ function animateWords(heading: HTMLElement, delay: number) {
 }
 
 function revealVars(el: HTMLElement): gsap.TweenVars {
-  if (el.dataset.reveal === 'image')
+  if (el.dataset.reveal === 'image') {
     return { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, autoAlpha: 1 }
-  return { y: 0, autoAlpha: 1 }
+  }
+  return { y: 0, autoAlpha: 1, filter: 'blur(0px)' }
 }
 
+/** Reference-style entrance: content rises slightly out of a soft blur. */
 function hiddenVars(el: HTMLElement): gsap.TweenVars {
   const kind = el.dataset.reveal
-  if (kind === 'image') return { clipPath: 'inset(12% 8% 12% 8%)', scale: 1.08, autoAlpha: 0 }
-  if (kind === 'heading') return { y: 36, autoAlpha: 0 }
-  return { y: 24, autoAlpha: 0 }
+  if (kind === 'image') return { clipPath: 'inset(10% 6% 10% 6%)', scale: 1.06, autoAlpha: 0 }
+  if (kind === 'heading') return { y: 18, autoAlpha: 0, filter: 'blur(10px)' }
+  return { y: 16, autoAlpha: 0, filter: 'blur(6px)' }
 }
 
 function setupReveals(root: HTMLElement) {
@@ -87,7 +93,7 @@ function setupReveals(root: HTMLElement) {
           duration: el.dataset.reveal === 'image' ? 1.2 : 0.9,
           ease: EASE,
           delay,
-          clearProps: 'transform,clipPath',
+          clearProps: 'transform,clipPath,filter',
         })
       })
     },
@@ -115,28 +121,24 @@ function setupParallax(root: HTMLElement) {
   })
 }
 
-function setupCounters(root: HTMLElement) {
-  gsap.utils.toArray<HTMLElement>('[data-countup]', root).forEach((el) => {
-    const original = el.textContent ?? ''
-    const match = /^(\D*)(\d+)(.*)$/.exec(original)
-    if (!match) return
-    const prefix = match[1] ?? ''
-    const target = Number(match[2])
-    const suffix = match[3] ?? ''
-    const state = { value: 0 }
-    el.textContent = prefix + '0' + suffix
-    gsap.to(state, {
-      value: target,
-      duration: 1.6,
-      ease: 'power3.out',
-      scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-      onUpdate: () => {
-        el.textContent = prefix + Math.round(state.value) + suffix
+/** Lines marked data-progress-line draw downward as their container scrolls through. */
+function setupProgressLines(root: HTMLElement) {
+  gsap.utils.toArray<HTMLElement>('[data-progress-line]', root).forEach((line) => {
+    gsap.fromTo(
+      line,
+      { scaleY: 0 },
+      {
+        scaleY: 1,
+        ease: 'none',
+        transformOrigin: 'top center',
+        scrollTrigger: {
+          trigger: line.parentElement ?? line,
+          start: 'top 70%',
+          end: 'bottom 60%',
+          scrub: true,
+        },
       },
-      onComplete: () => {
-        el.textContent = original
-      },
-    })
+    )
   })
 }
 
@@ -165,8 +167,13 @@ function setupMagnetic(): () => void {
   return () => cleanups.forEach((fn) => fn())
 }
 
-/** Re-scans the page after every navigation and wires scroll-driven motion. */
-function usePageMotion(pathname: string) {
+/**
+ * Wires scroll-driven motion for the page it is rendered in. Render it as the last
+ * child of a page so its effect runs after that page's tree has hydrated (it sets
+ * inline styles, which must not happen before hydration).
+ */
+export function PageMotion() {
+  const pathname = usePathname()
   useEffect(() => {
     const root = document.getElementById('main')
     if (!root || prefersReducedMotion()) {
@@ -176,7 +183,7 @@ function usePageMotion(pathname: string) {
     const ctx = gsap.context(() => {
       setupReveals(root)
       setupParallax(root)
-      setupCounters(root)
+      setupProgressLines(root)
     }, root)
     const detachMagnetic = setupMagnetic()
     markReady()
@@ -187,12 +194,11 @@ function usePageMotion(pathname: string) {
       ctx.revert()
     }
   }, [pathname])
+  return null
 }
 
-/** Mounted once in the root layout. Renders nothing. */
-export function MotionRoot() {
-  const pathname = usePathname()
+/** Mounted once in the root layout: desktop smooth scrolling. Renders nothing. */
+export function SmoothScroll() {
   useSmoothScroll()
-  usePageMotion(pathname)
   return null
 }
