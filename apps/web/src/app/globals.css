@@ -237,6 +237,19 @@ html.lenis body {
   opacity: 0;
 }
 
+/* Slow ambient drift for the hero glow (transform only). */
+.hero-orb {
+  animation: orb-drift 18s var(--ease-in-out) infinite alternate;
+}
+@keyframes orb-drift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-6%, 8%, 0) scale(1.12);
+  }
+}
+
 /* Route transition: the template remounts on every navigation. */
 .page-enter {
   animation: page-enter 0.7s var(--ease-out) both;
