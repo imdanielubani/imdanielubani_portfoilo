@@ -42,18 +42,24 @@ export function ContributionGraph({
   return (
     <figure className={cn('min-w-0', className)}>
       <div className="overflow-x-auto pb-2 [direction:rtl]" data-lenis-prevent>
-        <div className="inline-block [direction:ltr]">
-          <div aria-hidden className="mb-1.5 flex gap-[3px] text-[0.65rem] text-ink-subtle">
+        <div
+          className="min-w-[38rem] [direction:ltr]"
+          style={{ ['--weeks' as string]: weeks.length }}
+        >
+          <div
+            aria-hidden
+            className="mb-1.5 grid grid-cols-[repeat(var(--weeks),minmax(0,1fr))] gap-[3px] text-[0.65rem] text-ink-subtle"
+          >
             {labels.map((label, index) => (
-              <span key={index} className="w-[11px] shrink-0 overflow-visible whitespace-nowrap">
-                {label ?? ''}
+              <span key={index} className="overflow-visible whitespace-nowrap">
+                {index < labels.length - 2 ? (label ?? '') : ''}
               </span>
             ))}
           </div>
           <div
             role="img"
             aria-label={calendar.total + ' contributions on GitHub in the last year'}
-            className="grid grid-flow-col grid-rows-7 gap-[3px]"
+            className="grid grid-flow-col grid-cols-[repeat(var(--weeks),minmax(0,1fr))] grid-rows-7 gap-[3px]"
           >
             {weeks.flatMap((week, weekIndex) =>
               week.map((day, dayIndex) =>
@@ -61,10 +67,13 @@ export function ContributionGraph({
                   <span
                     key={day.date}
                     title={describe(day)}
-                    className={cn('size-[11px] rounded-[3px]', LEVEL_CLASS[day.level])}
+                    className={cn('aspect-square w-full rounded-[3px]', LEVEL_CLASS[day.level])}
                   />
                 ) : (
-                  <span key={'pad-' + weekIndex + '-' + dayIndex} className="size-[11px]" />
+                  <span
+                    key={'pad-' + weekIndex + '-' + dayIndex}
+                    className="aspect-square w-full"
+                  />
                 ),
               ),
             )}
