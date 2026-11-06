@@ -1,5 +1,6 @@
 /*
- * Design tokens. Light is the default; dark applies via data-theme="dark" on <html>,
+ * Design tokens. Dark mode is a neutral near-black (no blue tint), never pure #000.
+ * Light is the default; dark applies via data-theme="dark" on <html>,
  * or via the OS preference when no explicit theme is set.
  */
 :root {
@@ -43,47 +44,47 @@
 }
 
 :root[data-theme='dark'] {
-  --canvas: #0f1c24;
-  --canvas-outer: #0b161d;
-  --dot: #1f3340;
-  --surface: #172832;
-  --surface-2: #14242d;
-  --line: #22394a;
-  --line-strong: #2c4658;
-  --ink: #f1eee9;
-  --ink-soft: #dcd8d1;
-  --ink-muted: #9fb0ba;
-  --ink-subtle: #6d8390;
+  --canvas: #0b0b0b;
+  --canvas-outer: #050505;
+  --dot: #1e1e1e;
+  --surface: #171717;
+  --surface-2: #111111;
+  --line: #222222;
+  --line-strong: #2e2e2e;
+  --ink: #f2f0ec;
+  --ink-soft: #dad7d1;
+  --ink-muted: #9c9993;
+  --ink-subtle: #6b6863;
   --accent: #ff6a1a;
-  --accent-soft: #2a2119;
+  --accent-soft: #23150c;
   --success: #3fbf72;
-  --success-soft: #16322a;
-  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 10px 30px -14px rgb(0 0 0 / 0.6);
-  --shadow-float: 0 1px 2px rgb(0 0 0 / 0.35), 0 24px 50px -20px rgb(0 0 0 / 0.75);
-  --shadow-pill: 0 1px 2px rgb(0 0 0 / 0.35), 0 6px 18px -8px rgb(0 0 0 / 0.6);
+  --success-soft: #0f2318;
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.5), 0 10px 30px -14px rgb(0 0 0 / 0.8);
+  --shadow-float: 0 1px 2px rgb(0 0 0 / 0.55), 0 24px 50px -20px rgb(0 0 0 / 0.9);
+  --shadow-pill: 0 1px 2px rgb(0 0 0 / 0.55), 0 6px 18px -8px rgb(0 0 0 / 0.8);
   color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
-    --canvas: #0f1c24;
-    --canvas-outer: #0b161d;
-    --dot: #1f3340;
-    --surface: #172832;
-    --surface-2: #14242d;
-    --line: #22394a;
-    --line-strong: #2c4658;
-    --ink: #f1eee9;
-    --ink-soft: #dcd8d1;
-    --ink-muted: #9fb0ba;
-    --ink-subtle: #6d8390;
+    --canvas: #0b0b0b;
+    --canvas-outer: #050505;
+    --dot: #1e1e1e;
+    --surface: #171717;
+    --surface-2: #111111;
+    --line: #222222;
+    --line-strong: #2e2e2e;
+    --ink: #f2f0ec;
+    --ink-soft: #dad7d1;
+    --ink-muted: #9c9993;
+    --ink-subtle: #6b6863;
     --accent: #ff6a1a;
-    --accent-soft: #2a2119;
+    --accent-soft: #23150c;
     --success: #3fbf72;
-    --success-soft: #16322a;
-    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.3), 0 10px 30px -14px rgb(0 0 0 / 0.6);
-    --shadow-float: 0 1px 2px rgb(0 0 0 / 0.35), 0 24px 50px -20px rgb(0 0 0 / 0.75);
-    --shadow-pill: 0 1px 2px rgb(0 0 0 / 0.35), 0 6px 18px -8px rgb(0 0 0 / 0.6);
+    --success-soft: #0f2318;
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.5), 0 10px 30px -14px rgb(0 0 0 / 0.8);
+    --shadow-float: 0 1px 2px rgb(0 0 0 / 0.55), 0 24px 50px -20px rgb(0 0 0 / 0.9);
+    --shadow-pill: 0 1px 2px rgb(0 0 0 / 0.55), 0 6px 18px -8px rgb(0 0 0 / 0.8);
     color-scheme: dark;
   }
 }
