@@ -108,7 +108,7 @@ export function TestimonialCarousel({ items }: { items: Testimonial[] }) {
         <div aria-live="polite" className="mt-4 min-h-[12rem]">
           <AnimatePresence mode="wait" initial={false}>
             <motion.figure key={index} {...motionProps} transition={{ duration: 0.35, ease: EASE }}>
-              <blockquote className="text-[clamp(1.35rem,2.4vw,1.85rem)] leading-snug text-ink">
+              <blockquote className="text-[clamp(1.25rem,2vw,1.4375rem)] leading-snug text-ink">
                 {current.quote}
               </blockquote>
               <figcaption className="mt-6">
