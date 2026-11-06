@@ -85,40 +85,17 @@ const homeSections: SectionInput[] = [
     },
   },
   {
-    id: 'home-achievements',
-    type: 'statistics',
-    settings: { background: 'canvas', spacing: 'lg', hidden: false },
+    id: 'home-testimonials',
+    type: 'testimonials',
     data: {
-      eyebrow: '// Selected achievements',
-      heading: 'Small numbers, real outcomes.',
-      headingAccent: 'real outcomes.',
-      items: [
-        {
-          value: '3+',
-          label: 'Years shipping production systems',
-          description: 'Web, mobile and backend across four industries.',
-        },
-        {
-          value: '98',
-          label: 'Lighthouse performance score',
-          description: 'Zicstack Innovation corporate website.',
-        },
-        {
-          value: '5',
-          label: 'Nigerian languages',
-          description: 'Full product translation delivered at Cviqli.',
-        },
-        {
-          value: '2',
-          label: 'Markets, one codebase',
-          description: 'Pavocard serves Nigeria and Ghana.',
-        },
-        {
-          value: '6',
-          label: 'Staff departments',
-          description: 'Run on the Retiro Del Rocio tablet apps.',
-        },
-      ],
+      eyebrow: '// good words',
+      heading: 'Some good words from people I’ve worked with.',
+      headingAccent: 'people I’ve worked with.',
+      // Real testimonials only: add them from the CMS. Until then an invitation is shown.
+      items: [],
+      inviteTitle: 'Worked with me? I’d love to hear how it went.',
+      inviteBody:
+        'A short recommendation helps others understand what working with me is like. It will appear here once added.',
     },
   },
   {

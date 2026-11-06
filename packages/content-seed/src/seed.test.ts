@@ -50,3 +50,14 @@ describe('home How it works', () => {
     expect(section.data.stats.map((s) => s.value)).toEqual(['3+', '5', '4'])
   })
 })
+
+describe('home testimonials', () => {
+  it('replaces achievements and ships no invented quotes', () => {
+    const home = pages.find((p) => p.slug === 'home')
+    expect(home?.sections.some((s) => s.type === 'statistics')).toBe(false)
+    const section = home?.sections.find((s) => s.type === 'testimonials')
+    expect(section?.type).toBe('testimonials')
+    if (section?.type !== 'testimonials') return
+    expect(section.data.items).toEqual([])
+  })
+})
