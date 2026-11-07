@@ -64,3 +64,22 @@ describe('home testimonials', () => {
     ).toBe(true)
   })
 })
+
+describe('home services', () => {
+  it('replaces the philosophy section with services that each have a hover image', () => {
+    const home = pages.find((p) => p.slug === 'home')
+    const types = home?.sections.map((s) => s.id) ?? []
+    expect(types).not.toContain('home-philosophy')
+    const section = home?.sections.find((s) => s.id === 'home-services')
+    expect(section?.type).toBe('services')
+    if (section?.type !== 'services') return
+    expect(section.data.eyebrow).toBe('// Services i provide')
+    expect(section.data.items).toHaveLength(5)
+    expect(section.data.items.every((item) => item.image && item.tags.length > 0)).toBe(true)
+  })
+
+  it('keeps good words directly after the services', () => {
+    const ids = pages.find((p) => p.slug === 'home')?.sections.map((s) => s.id) ?? []
+    expect(ids.indexOf('home-testimonials')).toBe(ids.indexOf('home-services') + 1)
+  })
+})

@@ -84,36 +84,47 @@ const homeSections: SectionInput[] = [
     },
   },
   {
-    id: 'home-philosophy',
+    id: 'home-services',
     type: 'services',
     data: {
-      eyebrow: '// Working philosophy',
-      heading: 'How I approach engineering.',
-      headingAccent: 'engineering.',
+      eyebrow: '// Services i provide',
+      heading: 'I can help you with these things',
+      // Hover images reuse the placeholder covers; replace them from the CMS media library.
       items: [
         {
-          title: 'Product mindset',
+          title: 'Full-stack web development',
           description:
-            'I care about how systems are designed, how people experience them, and how they evolve as a business grows.',
-          icon: 'compass',
+            'Complete web products, from the database and API to the interface, taken all the way through deployment.',
+          tags: ['React', 'Next.js', 'Node.js', 'Laravel'],
+          image: media.coverA,
         },
         {
-          title: 'Built for real conditions',
+          title: 'Mobile app development',
           description:
-            'Software has to perform under real-world load, flaky networks and messy data, not just in a demo.',
-          icon: 'shield',
+            'Cross-platform apps for iOS, Android and tablets from one codebase, including operations apps used by staff every day.',
+          tags: ['Flutter', 'Dart', 'Riverpod', 'React Native'],
+          image: media.coverB,
         },
         {
-          title: 'End-to-end ownership',
+          title: 'Backend & API engineering',
           description:
-            'From architecture and data modeling to UI and deployment, I take responsibility for the whole outcome.',
-          icon: 'layers',
+            'Data models, REST and GraphQL APIs, authentication and real-time services built to hold up in production.',
+          tags: ['NestJS', 'Prisma', 'PostgreSQL', 'Redis'],
+          image: media.coverC,
         },
         {
-          title: 'Clarity over cleverness',
+          title: 'Payments & fintech integrations',
           description:
-            'Readable code, clear APIs and documented decisions make products easier to grow and hand over.',
-          icon: 'sparkles',
+            'Payment flows and wallet features for fintech products, drawing on the Pavocard and Cardcentrals platforms I built.',
+          tags: ['Paystack', 'Flutterwave', 'Monnify', 'Reloadly'],
+          image: media.coverD,
+        },
+        {
+          title: 'AI-powered product features',
+          description:
+            'Streaming AI chat, voice dictation, translation and retrieval features, like the civic product I built at Cviqli.',
+          tags: ['OpenAI API', 'LLM Systems', 'RAG', 'Prompt Engineering'],
+          image: media.coverA,
         },
       ],
     },
