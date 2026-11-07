@@ -5,8 +5,10 @@ import { usePathname } from 'next/navigation'
 import {
   Briefcase,
   Hash,
+  Moon,
   PenNib,
   Stack,
+  Sun,
   Tag,
   TerminalWindow,
   User,
@@ -18,7 +20,7 @@ import { cn } from '@/lib/cn'
 import { sectionIdFromHref } from '@/lib/nav'
 import { useActiveSection } from '@/lib/use-active-section'
 import { scrollToSection } from '@/components/motion/motion-root'
-import { ThemeToggle } from '@/components/theme/theme-toggle'
+import { useTheme } from '@/components/theme/theme-toggle'
 
 /** Icon keys the CMS can use on side menu items; unknown keys fall back to a hash. */
 const ICONS: Record<string, Icon> = {
@@ -82,11 +84,31 @@ export function Dock({ items }: DockProps) {
           )
         })}
         <li aria-hidden className="h-6 w-px bg-line lg:h-px lg:w-auto" />
-        <li className="flex justify-center">
-          <ThemeToggle className="size-10" />
+        <li>
+          <ModeButton />
         </li>
       </ul>
     </nav>
+  )
+}
+
+/** Theme switch styled as the reference "Mode" row: a round icon plus a label. */
+function ModeButton() {
+  const { theme, next, toggle } = useTheme()
+  const ThemeIcon = theme === 'dark' ? Sun : Moon
+  return (
+    <button
+      type="button"
+      onClick={toggle}
+      aria-label={'Switch to ' + next + ' theme'}
+      title={'Switch to ' + next + ' theme'}
+      className="flex h-10 w-full items-center justify-center rounded-[8px] px-[7px] text-ink-subtle transition-[color,transform] duration-200 ease-out hover:text-ink active:scale-[0.96] lg:justify-start"
+    >
+      <span className="flex size-6 shrink-0 items-center justify-center rounded-full border border-line-strong">
+        <ThemeIcon aria-hidden className="size-3.5" />
+      </span>
+      <DockLabel>Mode</DockLabel>
+    </button>
   )
 }
 

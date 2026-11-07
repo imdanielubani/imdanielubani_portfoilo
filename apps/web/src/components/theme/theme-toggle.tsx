@@ -24,11 +24,12 @@ function subscribe(callback: () => void): () => void {
   }
 }
 
-export function ThemeToggle({ className }: { className?: string }) {
+/** Current theme plus a toggle that applies and remembers the other one. */
+export function useTheme(): { theme: Theme; next: Theme; toggle: () => void } {
   const theme = useSyncExternalStore(subscribe, readTheme, () => 'light' as Theme)
   const next: Theme = theme === 'dark' ? 'light' : 'dark'
 
-  function handleToggle() {
+  function toggle() {
     document.documentElement.dataset.theme = next
     try {
       localStorage.setItem(STORAGE_KEY, next)
@@ -36,6 +37,12 @@ export function ThemeToggle({ className }: { className?: string }) {
       // Storage can be unavailable (private mode); the theme still applies for this visit.
     }
   }
+
+  return { theme, next, toggle }
+}
+
+export function ThemeToggle({ className }: { className?: string }) {
+  const { theme, next, toggle: handleToggle } = useTheme()
 
   return (
     <button
