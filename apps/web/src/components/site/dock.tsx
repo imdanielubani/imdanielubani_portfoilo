@@ -2,118 +2,89 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { motion, useReducedMotion } from 'motion/react'
 import {
   Briefcase,
-  ChatCircleDots,
-  FileText,
+  Hash,
   PenNib,
   Stack,
+  Tag,
+  TerminalWindow,
   User,
   type Icon,
 } from '@phosphor-icons/react'
-import type { ReactNode } from 'react'
+import type { MouseEvent } from 'react'
 import type { NavigationItem } from '@du/types'
-import { LogoMark } from '@du/ui'
 import { cn } from '@/lib/cn'
-import { isActivePath } from '@/lib/nav'
+import { sectionIdFromHref } from '@/lib/nav'
+import { useActiveSection } from '@/lib/use-active-section'
+import { scrollToSection } from '@/components/motion/motion-root'
 import { ThemeToggle } from '@/components/theme/theme-toggle'
 
-/** Icons for known routes; CMS pages fall back to a document icon. */
-const ROUTE_ICONS: Record<string, Icon> = {
-  '/about': User,
-  '/projects': PenNib,
-  '/experience': Briefcase,
-  '/skills': Stack,
-  '/resume': FileText,
-  '/contact': ChatCircleDots,
+/** Icon keys the CMS can use on side menu items; unknown keys fall back to a hash. */
+const ICONS: Record<string, Icon> = {
+  user: User,
+  'pen-nib': PenNib,
+  stack: Stack,
+  briefcase: Briefcase,
+  terminal: TerminalWindow,
+  tag: Tag,
 }
 
 interface DockProps {
   items: NavigationItem[]
-  contactHref?: string
 }
 
-export function Dock({ items, contactHref = '/contact' }: DockProps) {
+/** Side menu: each item scrolls to a section of the home page. */
+export function Dock({ items }: DockProps) {
   const pathname = usePathname()
-  const reduceMotion = Boolean(useReducedMotion())
-  const links: NavigationItem[] = [
-    ...items,
-    { id: 'dock-contact', label: 'Contact', href: contactHref },
-  ]
+  const onHome = pathname === '/'
+  const links = items
+    .map((item) => ({ item, sectionId: sectionIdFromHref(item.href) }))
+    .filter((link): link is { item: NavigationItem; sectionId: string } => link.sectionId !== null)
+  const activeId = useActiveSection(
+    links.map((link) => link.sectionId),
+    onHome,
+  )
+
+  function handleClick(event: MouseEvent<HTMLAnchorElement>, sectionId: string) {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return
+    // On the home page scroll in place; elsewhere let the link open the home page at the section.
+    if (onHome && scrollToSection(sectionId)) event.preventDefault()
+  }
 
   return (
     <nav
-      aria-label="Primary"
-      className="fixed bottom-4 left-1/2 z-40 flex -translate-x-1/2 flex-row items-center gap-1 rounded-full border border-line bg-surface-2/90 p-1.5 shadow-float backdrop-blur-xl lg:top-1/2 lg:bottom-auto lg:left-6 lg:translate-x-0 lg:-translate-y-1/2 lg:flex-col lg:rounded-[26px]"
+      aria-label="Sections"
+      className="fixed bottom-4 left-1/2 z-40 -translate-x-1/2 rounded-[16px] border border-line bg-surface-2 px-2 py-2.5 shadow-[0_0.5px_2px_-1.6px_rgb(0_0_0/0.15),0_4px_16.8px_-3.25px_rgb(0_0_0/0.09)] lg:top-1/2 lg:bottom-auto lg:left-6 lg:translate-x-0 lg:-translate-y-1/2"
     >
-      <DockLink href="/" label="Home" active={pathname === '/'} reduceMotion={reduceMotion}>
-        <LogoMark size={26} />
-      </DockLink>
-      <Divider />
-      {links.map((item) => {
-        const IconComponent = ROUTE_ICONS[item.href] ?? FileText
-        return (
-          <DockLink
-            key={item.id}
-            href={item.href}
-            label={item.label}
-            active={isActivePath(pathname, item.href)}
-            reduceMotion={reduceMotion}
-            className={item.href === '/resume' ? 'hidden sm:inline-flex' : undefined}
-          >
-            <IconComponent aria-hidden weight="fill" className="size-[19px]" />
-          </DockLink>
-        )
-      })}
-      <Divider />
-      <ThemeToggle className="size-10 border-transparent" />
+      <ul className="flex flex-row items-center gap-2 lg:flex-col lg:items-stretch">
+        {links.map(({ item, sectionId }) => {
+          const IconComponent = (item.icon && ICONS[item.icon]) || Hash
+          const active = activeId === sectionId
+          return (
+            <li key={item.id}>
+              <Link
+                href={item.href}
+                aria-label={item.label}
+                aria-current={active ? 'location' : undefined}
+                onClick={(event) => handleClick(event, sectionId)}
+                className={cn(
+                  'flex h-10 items-center justify-center rounded-[8px] px-2.5 transition-[color,background-color,transform] duration-200 ease-out active:scale-[0.96]',
+                  active
+                    ? 'bg-accent-soft text-accent'
+                    : 'text-ink-subtle hover:bg-accent-soft hover:text-accent focus-visible:bg-accent-soft focus-visible:text-accent',
+                )}
+              >
+                <IconComponent aria-hidden weight="fill" className="size-[18px] shrink-0" />
+              </Link>
+            </li>
+          )
+        })}
+        <li aria-hidden className="h-6 w-px bg-line lg:h-px lg:w-auto" />
+        <li className="flex justify-center">
+          <ThemeToggle className="size-10" />
+        </li>
+      </ul>
     </nav>
-  )
-}
-
-function Divider() {
-  return <span aria-hidden className="mx-0.5 h-6 w-px bg-line lg:mx-0 lg:my-0.5 lg:h-px lg:w-6" />
-}
-
-interface DockLinkProps {
-  href: string
-  label: string
-  active: boolean
-  reduceMotion: boolean
-  className?: string
-  children: ReactNode
-}
-
-function DockLink({ href, label, active, reduceMotion, className, children }: DockLinkProps) {
-  return (
-    <Link
-      href={href}
-      aria-label={label}
-      aria-current={active ? 'page' : undefined}
-      className={cn(
-        'group/dock relative inline-flex size-10 items-center justify-center rounded-full transition-[color,transform] duration-200 active:scale-[0.92]',
-        active ? 'text-accent' : 'text-ink-subtle hover:text-ink',
-        className,
-      )}
-    >
-      {active ? (
-        <motion.span
-          layoutId="dock-active"
-          aria-hidden
-          className="absolute inset-0 rounded-full bg-accent-soft"
-          transition={
-            reduceMotion ? { duration: 0 } : { type: 'spring', duration: 0.45, bounce: 0.15 }
-          }
-        />
-      ) : null}
-      <span className="relative">{children}</span>
-      <span
-        aria-hidden
-        className="pointer-events-none absolute bottom-full mb-3 rounded-full bg-ink px-2.5 py-1 text-xs whitespace-nowrap text-canvas opacity-0 transition-opacity duration-150 group-hover/dock:opacity-100 group-focus-visible/dock:opacity-100 lg:bottom-auto lg:left-full lg:mb-0 lg:ml-3"
-      >
-        {label}
-      </span>
-    </Link>
   )
 }
