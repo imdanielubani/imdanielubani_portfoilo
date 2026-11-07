@@ -31,7 +31,7 @@ export function Accordion({ items, numbered = true, defaultOpen = -1 }: Accordio
         const panelId = baseId + '-panel-' + index
         const buttonId = baseId + '-button-' + index
         return (
-          <li key={item.id} data-reveal>
+          <li key={item.id} data-reveal data-accordion-index={index}>
             <h3>
               <button
                 id={buttonId}
@@ -41,7 +41,7 @@ export function Accordion({ items, numbered = true, defaultOpen = -1 }: Accordio
                 onClick={() => setOpenIndex(isOpen ? -1 : index)}
                 className="group flex w-full items-center justify-between gap-6 py-5 text-left text-xl text-ink transition-colors hover:text-ink-soft md:text-[1.6rem]"
               >
-                <span>
+                <span className="transition-transform duration-300 ease-[var(--ease-out)] group-hover:translate-x-1 motion-reduce:transition-none motion-reduce:group-hover:translate-x-0">
                   {numbered ? <span className="text-ink-subtle">{index + 1}. </span> : null}
                   {item.title}
                 </span>
