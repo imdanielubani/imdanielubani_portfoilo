@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { pages, projects, skillCategories, experience } from './index'
+import { pages, projects, skillCategories, experience, navigation } from './index'
 
 describe('content seed', () => {
   it('has unique project slugs that resolve related projects', () => {
@@ -97,5 +97,19 @@ describe('home section anchors', () => {
       'testimonials',
       'hire-me',
     ])
+  })
+})
+
+describe('side menu', () => {
+  it('links only to sections that exist on the home page', () => {
+    const anchors = new Set(
+      (pages.find((p) => p.slug === 'home')?.sections ?? []).map((s) => s.settings.anchor),
+    )
+    expect(navigation.header.length).toBeGreaterThan(0)
+    for (const item of navigation.header) {
+      expect(item.href.startsWith('/#')).toBe(true)
+      expect(anchors.has(item.href.slice(2))).toBe(true)
+      expect(item.icon).toBeTruthy()
+    }
   })
 })

@@ -55,12 +55,14 @@ export const siteSettings: SiteSettings = {
 }
 
 export const navigation: Navigation = {
+  // The side menu scrolls to sections of the home page; hrefs match the section anchors.
   header: [
-    { id: 'nav-work', label: 'Work', href: '/projects' },
-    { id: 'nav-about', label: 'About', href: '/about' },
-    { id: 'nav-experience', label: 'Experience', href: '/experience' },
-    { id: 'nav-skills', label: 'Skills', href: '/skills' },
-    { id: 'nav-resume', label: 'Resume', href: '/resume' },
+    { id: 'nav-about', label: 'About', href: '/#about', icon: 'user' },
+    { id: 'nav-work', label: 'Work', href: '/#work', icon: 'pen-nib' },
+    { id: 'nav-skills', label: 'Skills', href: '/#skills', icon: 'stack' },
+    { id: 'nav-experience', label: 'Experience', href: '/#experience', icon: 'briefcase' },
+    { id: 'nav-services', label: 'Services', href: '/#services', icon: 'terminal' },
+    { id: 'nav-hire-me', label: 'Hire me', href: '/#hire-me', icon: 'tag' },
   ],
   footer: [
     { id: 'foot-home', label: 'Home', href: '/' },
