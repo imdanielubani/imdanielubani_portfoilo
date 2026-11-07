@@ -36,6 +36,7 @@ const homeSections: SectionInput[] = [
   {
     id: 'home-intro',
     type: 'imageText',
+    settings: { anchor: 'about' },
     data: {
       eyebrow: '// About me',
       heading: 'The person behind the products.',
@@ -49,6 +50,7 @@ const homeSections: SectionInput[] = [
   {
     id: 'home-projects',
     type: 'projectGrid',
+    settings: { anchor: 'work' },
     data: {
       eyebrow: '// Featured work',
       heading: 'Products built for real operations.',
@@ -63,7 +65,7 @@ const homeSections: SectionInput[] = [
   {
     id: 'home-skills',
     type: 'skillsGrid',
-    settings: { background: 'surface', spacing: 'lg', hidden: false },
+    settings: { anchor: 'skills', background: 'surface', spacing: 'lg', hidden: false },
     data: {
       eyebrow: '// Technical expertise',
       heading: 'One engineer across the whole stack.',
@@ -76,6 +78,7 @@ const homeSections: SectionInput[] = [
   {
     id: 'home-experience',
     type: 'experienceTimeline',
+    settings: { anchor: 'experience' },
     data: {
       eyebrow: '// Experience',
       heading: 'Where I’ve been building.',
@@ -86,6 +89,7 @@ const homeSections: SectionInput[] = [
   {
     id: 'home-services',
     type: 'services',
+    settings: { anchor: 'services' },
     data: {
       eyebrow: '// Services i provide',
       heading: 'I can help you with these things',
@@ -132,6 +136,7 @@ const homeSections: SectionInput[] = [
   {
     id: 'home-testimonials',
     type: 'testimonials',
+    settings: { anchor: 'testimonials' },
     data: {
       eyebrow: '// good words',
       heading: 'Some good words from people I’ve worked with.',
@@ -168,6 +173,7 @@ const homeSections: SectionInput[] = [
   {
     id: 'home-how-it-works',
     type: 'howItWorks',
+    settings: { anchor: 'hire-me' },
     data: {
       eyebrow: '// How it works',
       heading: 'No agencies. Just me, fully in on your product.',

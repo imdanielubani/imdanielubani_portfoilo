@@ -83,3 +83,19 @@ describe('home services', () => {
     expect(ids.indexOf('home-testimonials')).toBe(ids.indexOf('home-services') + 1)
   })
 })
+
+describe('home section anchors', () => {
+  it('gives each linked home section a unique anchor', () => {
+    const home = pages.find((p) => p.slug === 'home')
+    const anchors = (home?.sections ?? []).map((s) => s.settings.anchor).filter(Boolean)
+    expect(anchors).toEqual([
+      'about',
+      'work',
+      'skills',
+      'experience',
+      'services',
+      'testimonials',
+      'hire-me',
+    ])
+  })
+})
