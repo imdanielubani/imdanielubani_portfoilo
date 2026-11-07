@@ -35,6 +35,8 @@ export interface NavigationItem {
   label: string
   href: string
   external?: boolean
+  /** Icon key for the side menu, e.g. "user" or "briefcase". Unknown keys use a fallback. */
+  icon?: string
   children?: NavigationItem[]
 }
 
