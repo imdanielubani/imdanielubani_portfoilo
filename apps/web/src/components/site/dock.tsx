@@ -55,7 +55,7 @@ export function Dock({ items }: DockProps) {
   return (
     <nav
       aria-label="Sections"
-      className="fixed bottom-4 left-1/2 z-40 -translate-x-1/2 rounded-[16px] border border-line bg-surface-2 px-2 py-2.5 shadow-[0_0.5px_2px_-1.6px_rgb(0_0_0/0.15),0_4px_16.8px_-3.25px_rgb(0_0_0/0.09)] lg:top-1/2 lg:bottom-auto lg:left-6 lg:translate-x-0 lg:-translate-y-1/2"
+      className="group/dock fixed bottom-4 left-1/2 z-40 -translate-x-1/2 rounded-[16px] border border-line bg-surface-2 px-2 py-2.5 shadow-[0_0.5px_2px_-1.6px_rgb(0_0_0/0.15),0_4px_16.8px_-3.25px_rgb(0_0_0/0.09)] lg:top-1/2 lg:bottom-auto lg:left-6 lg:translate-x-0 lg:-translate-y-1/2"
     >
       <ul className="flex flex-row items-center gap-2 lg:flex-col lg:items-stretch">
         {links.map(({ item, sectionId }) => {
@@ -69,13 +69,14 @@ export function Dock({ items }: DockProps) {
                 aria-current={active ? 'location' : undefined}
                 onClick={(event) => handleClick(event, sectionId)}
                 className={cn(
-                  'flex h-10 items-center justify-center rounded-[8px] px-2.5 transition-[color,background-color,transform] duration-200 ease-out active:scale-[0.96]',
+                  'flex h-10 items-center justify-center rounded-[8px] px-2.5 transition-[color,background-color,transform] duration-200 ease-out active:scale-[0.96] lg:justify-start',
                   active
                     ? 'bg-accent-soft text-accent'
                     : 'text-ink-subtle hover:bg-accent-soft hover:text-accent focus-visible:bg-accent-soft focus-visible:text-accent',
                 )}
               >
                 <IconComponent aria-hidden weight="fill" className="size-[18px] shrink-0" />
+                <DockLabel>{item.label}</DockLabel>
               </Link>
             </li>
           )
@@ -86,5 +87,20 @@ export function Dock({ items }: DockProps) {
         </li>
       </ul>
     </nav>
+  )
+}
+
+/**
+ * Label that stays collapsed until the menu is hovered or focused (desktop only),
+ * so the menu widens to show every label at once, as in the reference.
+ */
+function DockLabel({ children }: { children: string }) {
+  return (
+    <span
+      aria-hidden
+      className="hidden grid-cols-[0fr] opacity-0 transition-[grid-template-columns,opacity,margin-left] duration-300 ease-[var(--ease-out)] group-focus-within/dock:ml-3 group-focus-within/dock:grid-cols-[1fr] group-focus-within/dock:opacity-100 group-hover/dock:ml-3 group-hover/dock:grid-cols-[1fr] group-hover/dock:opacity-100 motion-reduce:transition-none lg:grid"
+    >
+      <span className="overflow-hidden text-base whitespace-nowrap">{children}</span>
+    </span>
   )
 }
