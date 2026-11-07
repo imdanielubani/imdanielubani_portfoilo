@@ -43,6 +43,29 @@ function useSmoothScroll() {
   }, [])
 }
 
+/**
+ * Scrolls to a section on the current page through the smooth scroller when it is
+ * running (falling back to native scrolling), updates the URL hash, and moves focus to
+ * the section so keyboard and screen-reader users continue from there.
+ * Returns false when the section is not on this page.
+ */
+export function scrollToSection(id: string): boolean {
+  const target = document.getElementById(id)
+  if (!target) return false
+  if (lenisInstance) {
+    lenisInstance.scrollTo(target)
+  } else {
+    target.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' })
+  }
+  if (!target.hasAttribute('tabindex')) {
+    target.setAttribute('tabindex', '-1')
+    target.style.outline = 'none'
+  }
+  target.focus({ preventScroll: true })
+  window.history.replaceState(window.history.state, '', '#' + id)
+  return true
+}
+
 function animateWords(heading: HTMLElement, delay: number) {
   const words = heading.querySelectorAll<HTMLElement>('[data-word]')
   return gsap.fromTo(
