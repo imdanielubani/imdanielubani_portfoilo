@@ -34,6 +34,39 @@ describe('parseSections', () => {
   })
 })
 
+describe('services section', () => {
+  it('defaults tags and accepts items without the new fields', () => {
+    const result = sectionSchema.safeParse({
+      id: 's',
+      type: 'services',
+      data: { heading: 'Services', items: [{ title: 'Web apps', description: 'Built end to end.' }] },
+    })
+    expect(result.success).toBe(true)
+    if (result.success && result.data.type === 'services') {
+      expect(result.data.data.items[0]?.tags).toEqual([])
+      expect(result.data.data.items[0]?.image).toBeUndefined()
+    }
+  })
+
+  it('rejects a hover image with an unsafe URL', () => {
+    const result = sectionSchema.safeParse({
+      id: 's',
+      type: 'services',
+      data: {
+        heading: 'Services',
+        items: [
+          {
+            title: 'Web apps',
+            description: 'Built end to end.',
+            image: { id: 'm', url: 'javascript:alert(1)', alt: '' },
+          },
+        ],
+      },
+    })
+    expect(result.success).toBe(false)
+  })
+})
+
 describe('contact submission', () => {
   const valid = {
     name: 'Ada Lovelace',

@@ -126,7 +126,19 @@ const dataSchemas = {
     ...heading,
     description: optionalText(400),
     items: z
-      .array(z.object({ title: text(80).min(1), description: text(600), icon: optionalText(40) }))
+      .array(
+        z.object({
+          title: text(80).min(1),
+          description: text(600),
+          icon: optionalText(40),
+          /** Shown above the tags when the row is open, e.g. "2 to 4 weeks". */
+          timeline: optionalText(60),
+          /** Tools or deliverables, shown in small caps with an accent separator. */
+          tags: z.array(text(40).min(1)).max(8).default([]),
+          /** Preview that follows the pointer while the row is hovered. */
+          image: mediaSchema.nullish(),
+        }),
+      )
       .min(1)
       .max(12),
   }),
