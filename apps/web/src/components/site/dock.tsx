@@ -14,7 +14,7 @@ import {
   User,
   type Icon,
 } from '@phosphor-icons/react'
-import type { MouseEvent } from 'react'
+import { useEffect, type MouseEvent } from 'react'
 import type { NavigationItem } from '@du/types'
 import { cn } from '@/lib/cn'
 import { sectionIdFromHref } from '@/lib/nav'
@@ -32,6 +32,11 @@ const ICONS: Record<string, Icon> = {
   tag: Tag,
 }
 
+/** Timing for scrolling to a section named in the URL once it has rendered. */
+const HASH_POLL_MS = 100
+const HASH_MAX_ATTEMPTS = 40
+const HASH_SETTLE_MS = 600
+
 interface DockProps {
   items: NavigationItem[]
 }
@@ -47,6 +52,26 @@ export function Dock({ items }: DockProps) {
     links.map((link) => link.sectionId),
     onHome,
   )
+
+  const sectionKey = links.map((link) => link.sectionId).join('|')
+
+  // Arriving at "/#skills" (a fresh load or a link from another page): the section may
+  // render after this runs and reveals shift the layout, so wait for the section,
+  // scroll to it, then correct once more after the layout settles.
+  useEffect(() => {
+    if (!onHome) return
+    const id = sectionIdFromHref(window.location.hash)
+    if (!id || !sectionKey.split('|').includes(id)) return
+    let attempts = 0
+    let timer = window.setTimeout(function waitForSection() {
+      if (scrollToSection(id)) {
+        timer = window.setTimeout(() => scrollToSection(id), HASH_SETTLE_MS)
+      } else if (attempts++ < HASH_MAX_ATTEMPTS) {
+        timer = window.setTimeout(waitForSection, HASH_POLL_MS)
+      }
+    }, HASH_POLL_MS)
+    return () => window.clearTimeout(timer)
+  }, [onHome, sectionKey])
 
   function handleClick(event: MouseEvent<HTMLAnchorElement>, sectionId: string) {
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return
