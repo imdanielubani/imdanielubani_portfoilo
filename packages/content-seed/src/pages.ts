@@ -58,7 +58,6 @@ const homeSections: SectionInput[] = [
         'A selection of platforms across hospitality, fintech, healthcare and property management.',
       source: 'featured',
       limit: 4,
-      cta: { label: 'View all projects', href: '/projects', variant: 'secondary' },
     },
   },
   {

@@ -132,7 +132,7 @@ describe('home contact links', () => {
 })
 
 describe('site links', () => {
-  it('only links to the home page, its sections, project pages or the CV file', () => {
+  it('only links to the home page, its sections, individual project pages or the CV file', () => {
     const home = pages.find((p) => p.slug === 'home')
     const sectionIds = new Set<string>()
     for (const section of home?.sections ?? []) {
@@ -141,7 +141,7 @@ describe('site links', () => {
         sectionIds.add(section.data.booking.anchor)
       }
     }
-    const projectPaths = new Set(['/projects', ...projects.map((p) => '/projects/' + p.slug)])
+    const projectPaths = new Set(projects.map((p) => '/projects/' + p.slug))
     const json = JSON.stringify({ pages, navigation, siteSettings })
     const hrefs = [...json.matchAll(/"(?:href|ctaHref)":"(\/[^"]*)"/g)].map((m) => m[1] ?? '')
     expect(hrefs.length).toBeGreaterThan(0)
