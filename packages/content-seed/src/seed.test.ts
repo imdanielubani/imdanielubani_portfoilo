@@ -156,3 +156,11 @@ describe('site links', () => {
     }
   })
 })
+
+describe('hero CV button', () => {
+  it('uses a placeholder link until the CV link is set', () => {
+    const hero = pages.find((p) => p.slug === 'home')?.sections.find((s) => s.type === 'hero')
+    if (hero?.type !== 'hero') throw new Error('missing hero')
+    expect(hero.data.ctas.find((c) => c.label === 'Download CV')?.href).toBe('#')
+  })
+})

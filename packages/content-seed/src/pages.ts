@@ -3,7 +3,6 @@ import type { Page } from '@du/types'
 import { media } from './media'
 
 const PUBLISHED = '2026-11-06T00:00:00.000Z'
-const RESUME_URL = media.resume.url
 
 function buildPage(page: Omit<Page, 'sections'> & { sections: SectionInput[] }): Page {
   const { sections, rejected } = parseSections(page.sections)
@@ -28,7 +27,8 @@ const homeSections: SectionInput[] = [
       showAvailability: true,
       image: media.portrait,
       ctas: [
-        { label: 'Download CV', href: RESUME_URL, variant: 'secondary', download: true },
+        // Placeholder: replace "#" with the link to the CV from the CMS.
+        { label: 'Download CV', href: '#', variant: 'secondary', download: true },
         { label: 'Let’s connect', href: '/#contact', variant: 'primary' },
       ],
     },
