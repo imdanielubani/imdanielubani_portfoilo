@@ -39,7 +39,10 @@ describe('services section', () => {
     const result = sectionSchema.safeParse({
       id: 's',
       type: 'services',
-      data: { heading: 'Services', items: [{ title: 'Web apps', description: 'Built end to end.' }] },
+      data: {
+        heading: 'Services',
+        items: [{ title: 'Web apps', description: 'Built end to end.' }],
+      },
     })
     expect(result.success).toBe(true)
     if (result.success && result.data.type === 'services') {
@@ -121,6 +124,25 @@ describe('howItWorks section', () => {
       data: { ...base.data, booking: { ...base.data.booking, slotTimes: ['25:00'] } },
     }
     expect(parseSections([bad]).sections).toHaveLength(0)
+  })
+
+  it('accepts an optional header and anchor on the booking panel', () => {
+    const data = {
+      ...base.data,
+      booking: {
+        ...base.data.booking,
+        eyebrow: '// Contact',
+        heading: 'Book a call',
+        anchor: 'contact',
+      },
+    }
+    const result = sectionSchema.safeParse({ ...base, data })
+    expect(result.success).toBe(true)
+  })
+
+  it('rejects a booking anchor with unsafe characters', () => {
+    const data = { ...base.data, booking: { ...base.data.booking, anchor: 'contact"><script' } }
+    expect(sectionSchema.safeParse({ ...base, data }).success).toBe(false)
   })
 
   it('rejects a booking with no services', () => {

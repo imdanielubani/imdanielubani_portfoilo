@@ -200,6 +200,16 @@ const dataSchemas = {
     }),
     booking: z.object({
       enabled: z.boolean().default(true),
+      /** Optional header above the booking panel, styled like a section header. */
+      eyebrow: optionalText(60),
+      heading: optionalText(200),
+      headingAccent: optionalText(80),
+      /** Optional id so links such as "/#contact" can scroll to the booking panel. */
+      anchor: z
+        .string()
+        .regex(/^[a-z0-9-]*$/, 'Anchor may only contain lowercase letters, numbers and dashes')
+        .max(60)
+        .optional(),
       title: text(80).default('Book a call'),
       note: optionalText(200),
       services: z
