@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { pages, projects, skillCategories, experience, navigation } from './index'
+import { pages, projects, skillCategories, experience, navigation, siteSettings } from './index'
 
 describe('content seed', () => {
   it('has unique project slugs that resolve related projects', () => {
@@ -128,5 +128,31 @@ describe('home contact links', () => {
     if (hero?.type !== 'hero' || how?.type !== 'howItWorks') throw new Error('missing sections')
     expect(hero.data.ctas.find((c) => c.variant === 'primary')?.href).toBe('/#contact')
     expect(how.data.engagement.ctaHref).toBe('/#contact')
+  })
+})
+
+describe('site links', () => {
+  it('only links to the home page, its sections, project pages or the CV file', () => {
+    const home = pages.find((p) => p.slug === 'home')
+    const sectionIds = new Set<string>()
+    for (const section of home?.sections ?? []) {
+      if (section.settings.anchor) sectionIds.add(section.settings.anchor)
+      if (section.type === 'howItWorks' && section.data.booking.anchor) {
+        sectionIds.add(section.data.booking.anchor)
+      }
+    }
+    const projectPaths = new Set(['/projects', ...projects.map((p) => '/projects/' + p.slug)])
+    const json = JSON.stringify({ pages, navigation, siteSettings })
+    const hrefs = [...json.matchAll(/"(?:href|ctaHref)":"(\/[^"]*)"/g)].map((m) => m[1] ?? '')
+    expect(hrefs.length).toBeGreaterThan(0)
+    for (const href of hrefs) {
+      const allowed =
+        href === '/' ||
+        (href.startsWith('/#') && sectionIds.has(href.slice(2))) ||
+        projectPaths.has(href) ||
+        href.startsWith('/resume/') ||
+        href.endsWith('.pdf')
+      expect(allowed, 'unexpected link: ' + href).toBe(true)
+    }
   })
 })
