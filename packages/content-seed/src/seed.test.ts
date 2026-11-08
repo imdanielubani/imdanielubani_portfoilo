@@ -14,8 +14,8 @@ describe('content seed', () => {
     expect(projects.every((p) => p.year === '')).toBe(true)
   })
 
-  it('includes the required system pages', () => {
-    expect(pages.map((p) => p.slug)).toEqual(expect.arrayContaining(['home', 'about']))
+  it('ships the home page as the only page', () => {
+    expect(pages.map((p) => p.slug)).toEqual(['home'])
   })
 
   it('home page has a valid hero section first', () => {
