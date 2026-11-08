@@ -9,7 +9,8 @@ interface SectionHeaderProps {
   headingAccent?: string
   description?: string
   cta?: CtaLink | null
-  as?: 'h1' | 'h2'
+  /** h3 renders like h2; use it for a header nested inside another section. */
+  as?: 'h1' | 'h2' | 'h3'
   className?: string
 }
 

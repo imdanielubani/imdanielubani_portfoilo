@@ -29,8 +29,17 @@ export function HowItWorksSection({ section, site }: HowItWorksSectionProps) {
         />
       </div>
       {data.booking.enabled ? (
-        <div className="-mx-[var(--frame-pad)] mt-[var(--section-y)] border-t border-line-strong px-[var(--frame-pad)] pt-[var(--section-y)]">
+        <div
+          id={data.booking.anchor || undefined}
+          className="-mx-[var(--frame-pad)] mt-[var(--section-y)] border-t border-line-strong px-[var(--frame-pad)] pt-[var(--section-y)]"
+        >
           {/* Full-width hairline separating the hire-me row from the booking panel. */}
+          <SectionHeader
+            as="h3"
+            eyebrow={data.booking.eyebrow}
+            heading={data.booking.heading}
+            headingAccent={data.booking.headingAccent}
+          />
           <BookingPanel booking={data.booking} site={site} />
         </div>
       ) : null}
