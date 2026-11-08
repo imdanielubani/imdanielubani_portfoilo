@@ -19,7 +19,8 @@ export function CtaButton({ cta, size = 'md', className }: CtaButtonProps) {
     <ButtonLink
       href={cta.href}
       external={external}
-      download={cta.download || undefined}
+      // A "#" placeholder (link not set yet) must not get download, or browsers save the page.
+      download={cta.download && !cta.href.startsWith('#') ? true : undefined}
       variant={variant}
       size={size}
       className={className}
