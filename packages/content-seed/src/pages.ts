@@ -199,6 +199,10 @@ const homeSections: SectionInput[] = [
       },
       booking: {
         enabled: true,
+        eyebrow: '// Contact',
+        heading: 'Pick a time and let’s talk.',
+        headingAccent: 'let’s talk.',
+        anchor: 'contact',
         title: 'Book a call',
         note: 'Pick a time that suits you. I confirm every request by email.',
         services: [

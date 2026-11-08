@@ -48,6 +48,8 @@ describe('home How it works', () => {
     expect(section.data.booking.services.length).toBeGreaterThan(0)
     expect(section.data.booking.services.every((s) => !s.priceLabel)).toBe(true)
     expect(section.data.stats.map((s) => s.value)).toEqual(['3+', '5', '4'])
+    expect(section.data.booking.eyebrow).toBe('// Contact')
+    expect(section.data.booking.anchor).toBe('contact')
   })
 })
 
