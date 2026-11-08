@@ -128,9 +128,6 @@ export function TestimonialCarousel({ items }: { items: Testimonial[] }) {
             <ArrowButton label="Next testimonial" onClick={() => go(1)}>
               <ArrowRight aria-hidden weight="bold" className="size-4" />
             </ArrowButton>
-            <span className="ml-2 text-sm text-ink-subtle tabular-nums">
-              {index + 1} / {items.length}
-            </span>
           </div>
         ) : null}
       </div>
