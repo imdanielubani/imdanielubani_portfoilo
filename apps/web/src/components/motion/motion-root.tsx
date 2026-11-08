@@ -57,10 +57,8 @@ export function scrollToSection(id: string): boolean {
   } else {
     target.scrollIntoView({ behavior: prefersReducedMotion() ? 'auto' : 'smooth', block: 'start' })
   }
-  if (!target.hasAttribute('tabindex')) {
-    target.setAttribute('tabindex', '-1')
-    target.style.outline = 'none'
-  }
+  // Anchored sections render tabindex="-1" from the server; never add attributes here,
+  // because this can run before React hydrates the page and would cause a mismatch.
   target.focus({ preventScroll: true })
   window.history.replaceState(window.history.state, '', '#' + id)
   return true

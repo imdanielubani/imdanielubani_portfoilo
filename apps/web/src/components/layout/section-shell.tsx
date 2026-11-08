@@ -43,8 +43,12 @@ export function SectionShell({
     <section
       id={settings?.anchor || id}
       aria-labelledby={labelledBy}
+      // Anchored sections are focus targets for menu links. Rendering this from the server
+      // keeps hydration stable (it must never be added to the DOM by script).
+      tabIndex={settings?.anchor ? -1 : undefined}
       className={cn(
         'frame-pad relative',
+        settings?.anchor && 'outline-none',
         !isFirst && 'border-t border-line-strong',
         backgroundClass(settings?.background),
         spacingClass(settings?.spacing),

@@ -31,7 +31,8 @@ export function HowItWorksSection({ section, site }: HowItWorksSectionProps) {
       {data.booking.enabled ? (
         <div
           id={data.booking.anchor || undefined}
-          className="-mx-[var(--frame-pad)] mt-[var(--section-y)] border-t border-line-strong px-[var(--frame-pad)] pt-[var(--section-y)]"
+          tabIndex={data.booking.anchor ? -1 : undefined}
+          className="-mx-[var(--frame-pad)] mt-[var(--section-y)] border-t border-line-strong px-[var(--frame-pad)] pt-[var(--section-y)] outline-none"
         >
           {/* Full-width hairline separating the hire-me row from the booking panel. */}
           <SectionHeader
