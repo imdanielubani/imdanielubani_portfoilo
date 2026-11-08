@@ -36,7 +36,7 @@ export const siteSettings: SiteSettings = {
     ctas: [
       {
         label: 'Let\u2019s work together',
-        href: '/contact',
+        href: '/#contact',
         variant: 'primary',
         external: false,
         download: false,
@@ -65,14 +65,14 @@ export const navigation: Navigation = {
     { id: 'nav-hire-me', label: 'Hire me', href: '/#hire-me', icon: 'tag' },
     { id: 'nav-contact', label: 'Contact', href: '/#contact', icon: 'chat' },
   ],
+  // Footer links mirror the side menu: everything lives on the home page.
   footer: [
     { id: 'foot-home', label: 'Home', href: '/' },
-    { id: 'foot-work', label: 'Work', href: '/projects' },
-    { id: 'foot-about', label: 'About', href: '/about' },
-    { id: 'foot-experience', label: 'Experience', href: '/experience' },
-    { id: 'foot-skills', label: 'Skills', href: '/skills' },
-    { id: 'foot-services', label: 'Services', href: '/services' },
-    { id: 'foot-resume', label: 'Resume', href: '/resume' },
-    { id: 'foot-contact', label: 'Contact', href: '/contact' },
+    { id: 'foot-about', label: 'About', href: '/#about' },
+    { id: 'foot-work', label: 'Work', href: '/#work' },
+    { id: 'foot-skills', label: 'Skills', href: '/#skills' },
+    { id: 'foot-experience', label: 'Experience', href: '/#experience' },
+    { id: 'foot-services', label: 'Services', href: '/#services' },
+    { id: 'foot-contact', label: 'Contact', href: '/#contact' },
   ],
 }
