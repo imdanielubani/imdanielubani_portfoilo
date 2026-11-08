@@ -29,7 +29,7 @@ const homeSections: SectionInput[] = [
       image: media.portrait,
       ctas: [
         { label: 'Download CV', href: RESUME_URL, variant: 'secondary', download: true },
-        { label: 'Let’s connect', href: '/contact', variant: 'primary' },
+        { label: 'Let’s connect', href: '/#contact', variant: 'primary' },
       ],
     },
   },
@@ -195,7 +195,7 @@ const homeSections: SectionInput[] = [
           'From architecture to deployment',
         ],
         ctaLabel: 'Let’s connect',
-        ctaHref: '/contact',
+        ctaHref: '/#contact',
       },
       booking: {
         enabled: true,

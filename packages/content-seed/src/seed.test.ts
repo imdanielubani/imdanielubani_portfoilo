@@ -119,3 +119,14 @@ describe('side menu', () => {
     }
   })
 })
+
+describe('home contact links', () => {
+  it('sends the home Let’s connect buttons to the contact section', () => {
+    const home = pages.find((p) => p.slug === 'home')
+    const hero = home?.sections.find((s) => s.type === 'hero')
+    const how = home?.sections.find((s) => s.type === 'howItWorks')
+    if (hero?.type !== 'hero' || how?.type !== 'howItWorks') throw new Error('missing sections')
+    expect(hero.data.ctas.find((c) => c.variant === 'primary')?.href).toBe('/#contact')
+    expect(how.data.engagement.ctaHref).toBe('/#contact')
+  })
+})
