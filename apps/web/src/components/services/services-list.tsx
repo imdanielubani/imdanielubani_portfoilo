@@ -88,8 +88,12 @@ export function ServicesList({ items }: ServicesListProps) {
             className="relative size-full rounded-[8px] bg-white/90 p-1 shadow-float"
             style={{ rotate: CARD_TILT_DEG }}
             initial={false}
-            animate={{ opacity: isVisible ? 1 : 0, scale: isVisible || reduceMotion ? 1 : 0.9 }}
-            transition={reduceMotion ? { duration: 0 } : { duration: 0.2, ease: [0.23, 1, 0.32, 1] }}
+            // Same values on server and client; reduced motion only removes the duration,
+            // so hydration matches and the card still appears without movement.
+            animate={{ opacity: isVisible ? 1 : 0, scale: isVisible ? 1 : 0.9 }}
+            transition={
+              reduceMotion ? { duration: 0 } : { duration: 0.2, ease: [0.23, 1, 0.32, 1] }
+            }
           >
             <div className="relative size-full overflow-hidden rounded-[6px] bg-surface">
               {items.map((item, index) =>
