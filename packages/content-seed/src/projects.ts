@@ -276,7 +276,7 @@ export const projects: Project[] = [
     year: '',
     timeline: '',
     status: 'completed',
-    isFeatured: false,
+    isFeatured: true,
     technologies: tech(['Laravel', 'PHP', 'WordPress']),
     thumbnail: withAlt(media.coverD, 'Kedali cover (placeholder image)'),
     heroImage: withAlt(media.coverD, 'Kedali cover (placeholder image)'),

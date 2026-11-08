@@ -57,7 +57,7 @@ const homeSections: SectionInput[] = [
       description:
         'A selection of platforms across hospitality, fintech, healthcare and property management.',
       source: 'featured',
-      limit: 4,
+      limit: 5,
     },
   },
   {

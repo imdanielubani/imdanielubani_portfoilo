@@ -164,3 +164,15 @@ describe('hero CV button', () => {
     expect(hero.data.ctas.find((c) => c.label === 'Download CV')?.href).toBe('#')
   })
 })
+
+describe('featured work', () => {
+  it('features all five projects on the home page', () => {
+    const grid = pages
+      .find((p) => p.slug === 'home')
+      ?.sections.find((s) => s.type === 'projectGrid')
+    if (grid?.type !== 'projectGrid') throw new Error('missing project grid')
+    expect(projects).toHaveLength(5)
+    expect(projects.every((p) => p.isFeatured)).toBe(true)
+    expect(grid.data.limit).toBeGreaterThanOrEqual(projects.length)
+  })
+})
