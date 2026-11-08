@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import {
   AnimatePresence,
   motion,
@@ -9,7 +10,8 @@ import {
   useReducedMotion,
   useScroll,
 } from 'motion/react'
-import { useState } from 'react'
+import { useState, type MouseEvent } from 'react'
+import { scrollToSection } from '@/components/motion/motion-root'
 
 interface ProfilePillProps {
   name: string
@@ -19,17 +21,25 @@ interface ProfilePillProps {
 }
 
 const SHOW_AFTER_PX = 420
+/** The pill opens the About section of the home page. */
+const ABOUT_SECTION_ID = 'about'
 
 /** Compact identity pill that drops in at the top once the hero is out of view. */
 export function ProfilePill({ name, role, avatarUrl, isAvailable }: ProfilePillProps) {
   const { scrollY } = useScroll()
   const reduceMotion = useReducedMotion()
   const [isVisible, setIsVisible] = useState(false)
+  const pathname = usePathname()
 
   useMotionValueEvent(scrollY, 'change', (value) => {
     const next = value > SHOW_AFTER_PX
     if (next !== isVisible) setIsVisible(next)
   })
+
+  function handleClick(event: MouseEvent<HTMLAnchorElement>) {
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.button !== 0) return
+    if (pathname === '/' && scrollToSection(ABOUT_SECTION_ID)) event.preventDefault()
+  }
 
   return (
     <AnimatePresence>
@@ -43,7 +53,8 @@ export function ProfilePill({ name, role, avatarUrl, isAvailable }: ProfilePillP
           transition={{ type: 'spring', duration: 0.5, bounce: 0.2 }}
         >
           <Link
-            href="/about"
+            href={'/#' + ABOUT_SECTION_ID}
+            onClick={handleClick}
             className="flex items-center gap-3 rounded-full border border-line bg-surface-2/95 py-1.5 pr-4 pl-1.5 shadow-pill backdrop-blur-xl transition-transform duration-200 active:scale-[0.98]"
           >
             {avatarUrl ? (
