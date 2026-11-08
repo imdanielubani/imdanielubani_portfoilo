@@ -113,7 +113,9 @@ export function ProjectCardGrid({
   while (index < projects.length) {
     const current = projects[index]
     if (!current) break
-    if (rows.length % 2 === 0) {
+    // A pair row with only one card left would sit at half width, so it becomes a split card.
+    const isLastAlone = index === projects.length - 1
+    if (rows.length % 2 === 0 || isLastAlone) {
       rows.push({ split: current })
       index += 1
     } else {
