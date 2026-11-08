@@ -44,7 +44,6 @@ const homeSections: SectionInput[] = [
       image: media.portrait,
       imagePosition: 'left',
       html: '<p>I’m a Full Stack & Mobile Engineer with 3+ years of experience building production web, mobile, and backend systems across fintech, hospitality, civic tech, and healthcare.</p><p>I work across architecture, API design, database modeling, frontend development, mobile engineering, integrations, and deployment, with React, Next.js, TypeScript, Node.js, NestJS, Laravel, Flutter, PostgreSQL, Redis, Docker, and the OpenAI API.</p>',
-      ctas: [{ label: 'More about me', href: '/about', variant: 'secondary' }],
     },
   },
   {
@@ -72,7 +71,6 @@ const homeSections: SectionInput[] = [
       headingAccent: 'whole stack.',
       description:
         'Frontend, backend, mobile, infrastructure, AI and integrations, the tools I use to ship complete products.',
-      cta: { label: 'Explore skills', href: '/skills', variant: 'secondary' },
     },
   },
   {
@@ -83,7 +81,6 @@ const homeSections: SectionInput[] = [
       eyebrow: '// Experience',
       heading: 'Where I’ve been building.',
       headingAccent: 'building.',
-      cta: { label: 'Full experience', href: '/experience', variant: 'secondary' },
     },
   },
   {
