@@ -63,6 +63,7 @@ export const navigation: Navigation = {
     { id: 'nav-experience', label: 'Experience', href: '/#experience', icon: 'briefcase' },
     { id: 'nav-services', label: 'Services', href: '/#services', icon: 'terminal' },
     { id: 'nav-hire-me', label: 'Hire me', href: '/#hire-me', icon: 'tag' },
+    { id: 'nav-contact', label: 'Contact', href: '/#contact', icon: 'chat' },
   ],
   footer: [
     { id: 'foot-home', label: 'Home', href: '/' },

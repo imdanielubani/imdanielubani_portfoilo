@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
   Briefcase,
+  ChatCircleDots,
   Hash,
   Moon,
   PenNib,
@@ -30,6 +31,7 @@ const ICONS: Record<string, Icon> = {
   briefcase: Briefcase,
   terminal: TerminalWindow,
   tag: Tag,
+  chat: ChatCircleDots,
 }
 
 /** Timing for scrolling to a section named in the URL once it has rendered. */
@@ -82,9 +84,9 @@ export function Dock({ items }: DockProps) {
   return (
     <nav
       aria-label="Sections"
-      className="group/dock fixed bottom-4 left-1/2 z-40 -translate-x-1/2 rounded-[16px] border border-line bg-surface-2 px-2 py-2.5 shadow-[0_0.5px_2px_-1.6px_rgb(0_0_0/0.15),0_4px_16.8px_-3.25px_rgb(0_0_0/0.09)] lg:top-1/2 lg:bottom-auto lg:left-6 lg:translate-x-0 lg:-translate-y-1/2"
+      className="group/dock fixed bottom-4 left-1/2 z-40 -translate-x-1/2 rounded-[16px] border border-line bg-surface-2 p-1.5 shadow-[0_0.5px_2px_-1.6px_rgb(0_0_0/0.15),0_4px_16.8px_-3.25px_rgb(0_0_0/0.09)] lg:top-1/2 lg:bottom-auto lg:left-6 lg:translate-x-0 lg:-translate-y-1/2 lg:px-2 lg:py-2.5"
     >
-      <ul className="flex flex-row items-center gap-2 lg:flex-col lg:items-stretch">
+      <ul className="flex flex-row items-center gap-0 sm:gap-1 lg:flex-col lg:items-stretch lg:gap-2">
         {links.map(({ item, sectionId }) => {
           const IconComponent = (item.icon && ICONS[item.icon]) || Hash
           const active = activeId === sectionId
@@ -96,7 +98,7 @@ export function Dock({ items }: DockProps) {
                 aria-current={active ? 'location' : undefined}
                 onClick={(event) => handleClick(event, sectionId)}
                 className={cn(
-                  'flex h-10 items-center justify-center rounded-[8px] px-2.5 transition-[color,background-color,transform] duration-200 ease-out active:scale-[0.96] lg:justify-start',
+                  'flex size-9 items-center justify-center rounded-[8px] transition-[color,background-color,transform] duration-200 ease-out active:scale-[0.96] sm:size-10 lg:h-10 lg:w-auto lg:justify-start lg:px-2.5',
                   active
                     ? 'bg-accent-soft text-accent'
                     : 'text-ink-subtle hover:bg-accent-soft hover:text-accent focus-visible:bg-accent-soft focus-visible:text-accent',
@@ -108,7 +110,7 @@ export function Dock({ items }: DockProps) {
             </li>
           )
         })}
-        <li aria-hidden className="h-6 w-px bg-line lg:h-px lg:w-auto" />
+        <li aria-hidden className="mx-1 h-6 w-px bg-line lg:mx-0 lg:h-px lg:w-auto" />
         <li>
           <ModeButton />
         </li>
@@ -127,7 +129,7 @@ function ModeButton() {
       onClick={toggle}
       aria-label={'Switch to ' + next + ' theme'}
       title={'Switch to ' + next + ' theme'}
-      className="flex h-10 w-full items-center justify-center rounded-[8px] px-[7px] text-ink-subtle transition-[color,transform] duration-200 ease-out hover:text-ink active:scale-[0.96] lg:justify-start"
+      className="flex size-9 items-center justify-center rounded-[8px] text-ink-subtle transition-[color,transform] duration-200 ease-out hover:text-ink active:scale-[0.96] sm:size-10 lg:h-10 lg:w-full lg:justify-start lg:px-[7px]"
     >
       <span className="flex size-6 shrink-0 items-center justify-center rounded-full border border-line-strong">
         <ThemeIcon aria-hidden className="size-3.5" />

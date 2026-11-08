@@ -104,9 +104,13 @@ describe('home section anchors', () => {
 
 describe('side menu', () => {
   it('links only to sections that exist on the home page', () => {
-    const anchors = new Set(
-      (pages.find((p) => p.slug === 'home')?.sections ?? []).map((s) => s.settings.anchor),
-    )
+    const sections = pages.find((p) => p.slug === 'home')?.sections ?? []
+    const anchors = new Set(sections.map((s) => s.settings.anchor))
+    for (const section of sections) {
+      if (section.type === 'howItWorks' && section.data.booking.anchor) {
+        anchors.add(section.data.booking.anchor)
+      }
+    }
     expect(navigation.header.length).toBeGreaterThan(0)
     for (const item of navigation.header) {
       expect(item.href.startsWith('/#')).toBe(true)
