@@ -19,5 +19,5 @@ export function getContentConfig(env: NodeJS.ProcessEnv = process.env): ContentC
 }
 
 export function getSiteUrl(env: NodeJS.ProcessEnv = process.env): string {
-  return (env.SITE_URL || env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000').replace(/\/+$/, '')
+  return (env.SITE_URL || env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3001').replace(/\/+$/, '')
 }
